@@ -86,6 +86,76 @@
 
 
   <build>
+    <plugins>
+      <!--Jar file include dependencies-->
+      <!--<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>${maven-assembly-plugin.version}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <archive>
+                <manifest>
+                  <mainClass>${project.main-class}</mainClass>
+                </manifest>
+                <manifestEntries></manifestEntries>
+              </archive>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>-->
+
+      <!--put dependencies into separate folder-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <!--Copy dependencies to lib folder-->
+              <outputDirectory>${project.build.directory}/${lib-folder}</outputDirectory>
+              <!--If this line was active instead of above, dependencies will be in output jar file-->
+              <!--<outputDirectory>${project.build.outputDirectory}/${lib-folder}</outputDirectory>-->
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>${project.main-class}</mainClass>
+              <!--Add classpath to find dependencies-->
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>${lib-folder}/</classpathPrefix>
+            </manifest>
+            <manifestEntries>
+              <!--manually added dependencies-->
+              <!--<Class-Path></Class-Path>-->
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+
+
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>
