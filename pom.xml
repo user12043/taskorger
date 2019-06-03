@@ -15,9 +15,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.main-class>ogr.user12043.taskorger.Main</project.main-class>
-    <maven.compiler.source>1.11</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <java.version>1.11</java.version>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <java.version>11</java.version>
     <lib-folder>lib</lib-folder>
     <lombok.version>1.18.8</lombok.version>
     <jpa.version>2.2</jpa.version>
@@ -44,7 +44,6 @@
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>${postgresql.version}</version>
-      <type>bundle</type>
     </dependency>
 
     <dependency>
