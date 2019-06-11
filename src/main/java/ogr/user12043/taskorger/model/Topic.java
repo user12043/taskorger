@@ -1,43 +1,38 @@
 package ogr.user12043.taskorger.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.awt.*;
 import java.util.Date;
 import java.util.Set;
 
 /**
- * Created on 2.06.2019 - 12:02
+ * Created on 11.06.2019 - 15:28
  * part of taskorger
  *
  * @author user12043
  */
 @Data
 @Entity
-@Table(name = "t_user")
-public class User {
+@Table(name = "t_topic")
+public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
     @NotNull
     @Column(unique = true)
-    @Length(max = 30)
-    private String userName;
-    @NotNull
-//    @JsonIgnore // This ignores both reading and writing
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
+    private String name;
+    private Color foreground;
+    private Color background;
     @NotNull
     private Date createDate;
     @NotNull
     private Date updateDate = new Date();
-    @ManyToMany(mappedBy = "assignees")
+    @OneToMany(mappedBy = "topic")
     @JsonIgnore
     private Set<Task> tasks;
 }
