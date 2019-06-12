@@ -23,15 +23,21 @@ public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull
     @Column(unique = true)
     private String name;
+
     private Color foreground;
+
     private Color background;
+
     @NotNull
     private Date createDate;
+
     @NotNull
     private Date updateDate = new Date();
+
     @OneToMany(mappedBy = "topic")
     @JsonIgnore
     private Set<Task> tasks;

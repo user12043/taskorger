@@ -20,15 +20,21 @@ public class Column {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull
     private String name;
+
     private Byte ordinal;
+
     @NotNull
     private Integer columnLimit;
+
     @NotNull
     private Date createDate;
+
     @NotNull
     private Date updateDate = new Date();
+
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "column", orphanRemoval = true)
     private Set<Task> tasks;
 }

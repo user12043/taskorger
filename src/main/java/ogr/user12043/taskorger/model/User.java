@@ -24,19 +24,25 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     @NotNull
     @Column(unique = true)
     @Length(max = 30)
     private String userName;
+
     @NotNull
 //    @JsonIgnore // This ignores both reading and writing
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
     @NotNull
     private Date createDate;
+
     @NotNull
     private Date updateDate = new Date();
+
     @ManyToMany(mappedBy = "assignees")
     @JsonIgnore
     private Set<Task> tasks;

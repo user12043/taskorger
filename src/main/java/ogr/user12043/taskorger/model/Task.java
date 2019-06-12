@@ -20,23 +20,34 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String header;
+
     @NotNull
     private String content;
+
     private Byte priority;  // 0, 1, 2 - LOW, NORMAL, HIGH
+
     private Date deadline;
+
     private Byte status;    // 0, 1, 2 - ONGOING, COMPLETED, CANCELLED
+
     @NotNull
     private Date createDate;
+
     @NotNull
     private Date updateDate = new Date();
+
     @ManyToOne
     private Topic topic;
+
     @ManyToMany
     private Set<User> assignees;
+
     @NotNull
     @ManyToOne
     private Column column;
+
     @ManyToMany(mappedBy = "tasks")
     private Set<Tag> tags;
 }

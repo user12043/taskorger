@@ -22,12 +22,17 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private Color color;
+
     @NotNull
     private Date createDate;
+
     @NotNull
     private Date updateDate = new Date();
+
     @ManyToMany
     @JsonIgnore
     private Set<Task> tasks;
