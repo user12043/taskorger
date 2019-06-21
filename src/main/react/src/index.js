@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import constants from "constants";
+import constants from "./constants";
 
 ReactDOM.render(<App/>, document.getElementById(constants.ROOT_ELEMENT_ID));
 
