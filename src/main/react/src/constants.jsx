@@ -4,7 +4,12 @@
  * @author user12043
  */
 
-export default {
-  APP_CONTEXT: "taskorger/",
-  ROOT_ELEMENT_ID: "root"
-};
+class constants {
+  static APP_CONTEXT = "taskorger/";
+  static ROOT_ELEMENT_ID = "root";
+  static API_ROOT = this.APP_CONTEXT + "api/";
+}
+
+Object.freeze(constants);
+
+export default constants;
