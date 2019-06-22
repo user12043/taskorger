@@ -37,9 +37,6 @@ class AppNavBar extends React.Component {
   }
 
   render() {
-    if (!this.props.loggedIn) {
-      return "";
-    }
     return (
       <div>
         <Navbar color="dark" dark expand="md">
@@ -48,10 +45,10 @@ class AppNavBar extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/components/">Announcements</NavLink>
+                <NavLink href="#">Announcements</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">Tasks</NavLink>
+                <NavLink href="#">Tasks</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink>Note-Sources</NavLink>
@@ -61,7 +58,7 @@ class AppNavBar extends React.Component {
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  username
+                  {this.props.user.username} ({this.props.user.name})
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
