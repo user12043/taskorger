@@ -23,9 +23,12 @@ class App extends React.Component {
   render() {
     let elements = [];
     if (this.state.loggedIn) {
-      elements.push(<AppNavBar key={elements.length} user={this.state.loggedUser}/>);
+      elements.push(
+        <AppNavBar key={elements.length} user={this.state.loggedUser}/>
+      );
+    } else {
+      elements.push(<Login key={elements.length}/>);
     }
-    elements.push(<Login key={elements.length}/>);
     return (
       <div id="appContainer">{elements}</div>
     );

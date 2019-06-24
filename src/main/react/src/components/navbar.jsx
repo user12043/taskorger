@@ -5,6 +5,12 @@
  */
 
 import React from "react";
+import {BrowserRouter as Router, Link, Route} from "react-router-dom";
+import constants from "../constants";
+import Announcements from "../views/announcements";
+import Tasks from "../views/tasks";
+import NoteSrc from "../views/note_src";
+import Settings from "../views/settings";
 
 import {
   Collapse,
@@ -38,23 +44,23 @@ class AppNavBar extends React.Component {
 
   render() {
     return (
-      <div>
+      <Router>
         <Navbar color="dark" dark expand="md">
-          <NavbarBrand color={"light"} href="/">Taskorger</NavbarBrand>
+          <NavbarBrand color="light" href="/">Taskorger</NavbarBrand>
           <NavbarToggler onClick={this.toggle}/>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="#">Announcements</NavLink>
+                <NavLink><Link to={constants.ROUTES.ANNOUNCEMENTS}>Announcements</Link></NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="#">Tasks</NavLink>
+                <NavLink><Link to={constants.ROUTES.TASKS}>Tasks</Link></NavLink>
               </NavItem>
               <NavItem>
-                <NavLink>Note-Sources</NavLink>
+                <NavLink><Link to={constants.ROUTES.NOTE_SRC}>Note-Sources</Link></NavLink>
               </NavItem>
               <NavItem>
-                <NavLink>Settings</NavLink>
+                <NavLink><Link to={constants.ROUTES.SETTINGS}>Settings</Link></NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
@@ -76,7 +82,12 @@ class AppNavBar extends React.Component {
             </Nav>
           </Collapse>
         </Navbar>
-      </div>
+
+        <Route path={constants.ROUTES.ANNOUNCEMENTS} component={Announcements}/>
+        <Route path={constants.ROUTES.TASKS} component={Tasks}/>
+        <Route path={constants.ROUTES.NOTE_SRC} component={NoteSrc}/>
+        <Route path={constants.ROUTES.SETTINGS} component={Settings}/>
+      </Router>
     );
   }
 }
