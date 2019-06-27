@@ -6,6 +6,7 @@
 
 import React from "react";
 import {Button, Col, Container, Form, FormGroup, Input, Label} from 'reactstrap';
+import "../css/login.css";
 
 class Login extends React.Component {
   constructor(props) {
@@ -17,11 +18,13 @@ class Login extends React.Component {
 
     // register custom methods
     this.onChange = this.onChange.bind(this);
-    Login.onSubmit = Login.onSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  static onSubmit(event) {
+  onSubmit(event) {
     event.preventDefault();
+    console.log("login: ", this.state.username + ", " + this.state.password);
+    this.props.onLogin(this.state.username, this.state.password);
   }
 
   onChange(event) {
@@ -36,9 +39,9 @@ class Login extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container className="loginContainer border border-info">
         <h2>Sign In</h2>
-        <Form className="form" onSubmit={Login.onSubmit}>
+        <Form className="form" onSubmit={this.onSubmit}>
           <Col>
             <FormGroup>
               <Label>Username</Label>

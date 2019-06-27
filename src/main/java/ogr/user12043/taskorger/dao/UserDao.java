@@ -16,4 +16,6 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "user", path = "user")
 public interface UserDao extends JpaRepository<User, Long> {
     List<User> findUserByName(@Param("name") String name);
+
+    List<User> findByUserNameAndPassword(@Param("username") String username, @Param("password") String password);
 }

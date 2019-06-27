@@ -14,7 +14,8 @@ class constants {
     TASKS: "/tasks",
     NOTE_SRC: "/note-src",
     SETTINGS: "/settings"
-  }
+  };
+  static LOGGED_USER = "loggedUser";
 }
 
 Object.freeze(constants);

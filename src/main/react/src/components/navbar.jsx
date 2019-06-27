@@ -5,7 +5,7 @@
  */
 
 import React from "react";
-import {BrowserRouter as Router, Link, Route} from "react-router-dom";
+import {BrowserRouter as Router, NavLink, Route} from "react-router-dom";
 import constants from "../constants";
 import Announcements from "../views/announcements";
 import Tasks from "../views/tasks";
@@ -22,7 +22,6 @@ import {
   NavbarBrand,
   NavbarToggler,
   NavItem,
-  NavLink,
   UncontrolledDropdown
 } from 'reactstrap';
 
@@ -32,7 +31,8 @@ class AppNavBar extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      user: JSON.parse(localStorage.getItem(constants.LOGGED_USER))
     };
   }
 
@@ -51,20 +51,20 @@ class AppNavBar extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink><Link to={constants.ROUTES.ANNOUNCEMENTS}>Announcements</Link></NavLink>
+                <NavLink to={constants.ROUTES.ANNOUNCEMENTS} className="nav-link">Announcements</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink><Link to={constants.ROUTES.TASKS}>Tasks</Link></NavLink>
+                <NavLink to={constants.ROUTES.TASKS} className="nav-link">Tasks</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink><Link to={constants.ROUTES.NOTE_SRC}>Note-Sources</Link></NavLink>
+                <NavLink to={constants.ROUTES.NOTE_SRC} className="nav-link">Note-Sources</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink><Link to={constants.ROUTES.SETTINGS}>Settings</Link></NavLink>
+                <NavLink to={constants.ROUTES.SETTINGS} className="nav-link">Settings</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  {this.props.user.username} ({this.props.user.name})
+                  {this.state.user.username} ({this.state.user.name})
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
@@ -74,7 +74,7 @@ class AppNavBar extends React.Component {
                     Messages
                   </DropdownItem>
                   <DropdownItem divider/>
-                  <DropdownItem>
+                  <DropdownItem onClick={this.props.onLogout}>
                     Logout
                   </DropdownItem>
                 </DropdownMenu>
