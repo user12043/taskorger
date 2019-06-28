@@ -11,6 +11,7 @@ import Announcements from "../views/announcements";
 import Tasks from "../views/tasks";
 import NoteSrc from "../views/note_src";
 import Settings from "../views/settings";
+import ControlPanel from "../views/control_panel";
 
 import {
   Collapse,
@@ -43,6 +44,31 @@ class AppNavBar extends React.Component {
   }
 
   render() {
+    let routes = [
+      <Route exact key="0" path={constants.ROUTES.ANNOUNCEMENTS} component={Announcements}/>,
+      <Route exact key="1" path={constants.ROUTES.TASKS} component={Tasks}/>,
+      <Route exact key="2" path={constants.ROUTES.NOTE_SRC} component={NoteSrc}/>,
+      <Route exact key="3" path={constants.ROUTES.SETTINGS} component={Settings}/>
+    ];
+
+    let navItems = [
+      <NavItem key="0"><NavLink to={constants.ROUTES.ANNOUNCEMENTS}
+                                className="nav-link">Announcements</NavLink></NavItem>,
+      <NavItem key="1"><NavLink to={constants.ROUTES.TASKS} className="nav-link">Tasks</NavLink></NavItem>,
+      <NavItem key="2"><NavLink to={constants.ROUTES.NOTE_SRC} className="nav-link">Note-Sources</NavLink></NavItem>,
+      <NavItem key="3"><NavLink to={constants.ROUTES.SETTINGS} className="nav-link">Settings</NavLink></NavItem>
+    ];
+
+    if (this.props.user.role === constants.ROLES.ADMIN) {
+      routes.push(
+        <Route key={routes.length} path={constants.ROUTES.CONTROL_PANEL} component={ControlPanel}/>
+      );
+      navItems.push(
+        <NavItem key={navItems.length}><NavLink to={constants.ROUTES.CONTROL_PANEL} className="nav-link">Control
+          Panel</NavLink></NavItem>
+      );
+    }
+
     return (
       <Router>
         <Navbar color="dark" dark expand="md">
@@ -50,18 +76,7 @@ class AppNavBar extends React.Component {
           <NavbarToggler onClick={this.toggle}/>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink to={constants.ROUTES.ANNOUNCEMENTS} className="nav-link">Announcements</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to={constants.ROUTES.TASKS} className="nav-link">Tasks</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to={constants.ROUTES.NOTE_SRC} className="nav-link">Note-Sources</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to={constants.ROUTES.SETTINGS} className="nav-link">Settings</NavLink>
-              </NavItem>
+              {navItems}
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   {this.state.user.username} ({this.state.user.name})
@@ -83,10 +98,7 @@ class AppNavBar extends React.Component {
           </Collapse>
         </Navbar>
 
-        <Route path={constants.ROUTES.ANNOUNCEMENTS} component={Announcements}/>
-        <Route path={constants.ROUTES.TASKS} component={Tasks}/>
-        <Route path={constants.ROUTES.NOTE_SRC} component={NoteSrc}/>
-        <Route path={constants.ROUTES.SETTINGS} component={Settings}/>
+        {routes}
       </Router>
     );
   }

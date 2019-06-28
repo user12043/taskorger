@@ -1,5 +1,8 @@
 //modules
 import React from 'react';
+import constants from "./constants";
+import {withRouter} from "react-router-dom";
+import * as util from "./utils";
 // styles
 import "./css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -7,8 +10,6 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import AppNavBar from "./components/navbar";
 //views
 import Login from "./views/login";
-import constants from "./constants";
-import {withRouter} from "react-router-dom";
 
 class App extends React.Component {
   constructor(props) {
@@ -18,23 +19,21 @@ class App extends React.Component {
   }
 
   onLogin(username, password) {
-    fetch(constants.API_ROOT + "user/search/findByUserNameAndPassword?username=" + username + "&password=" + password)
-      .then((result) => result.json())
-      .then((data) => {
-        let user = data["_embedded"]["user"];
-        if (user[0]) {
-          console.log("login success");
-          localStorage.setItem(constants.LOGGED_USER, JSON.stringify(user[0]));
-          this.forceUpdate();
-          // default route to announcements page
-          withRouter((history) => {
-            history.push(constants.ROUTES.ANNOUNCEMENTS);
-          });
-        } else {
-          console.log("login failed");
-          localStorage.removeItem(constants.LOGGED_USER);
-        }
-      });
+    util.apiReq("user/search/findByUserNameAndPassword?username=" + username + "&password=" + password, (data) => {
+      let user = data["_embedded"]["user"];
+      if (user[0]) {
+        console.log("login success");
+        localStorage.setItem(constants.LOGGED_USER, JSON.stringify(user[0]));
+        this.forceUpdate();
+        // default route to announcements page
+        withRouter((history) => {
+          history.push(constants.ROUTES.ANNOUNCEMENTS);
+        });
+      } else {
+        alert("login failed");
+        localStorage.removeItem(constants.LOGGED_USER);
+      }
+    });
   }
 
   onLogout() {

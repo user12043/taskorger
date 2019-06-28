@@ -13,9 +13,14 @@ class constants {
     ANNOUNCEMENTS: "/announcements",
     TASKS: "/tasks",
     NOTE_SRC: "/note-src",
-    SETTINGS: "/settings"
+    SETTINGS: "/settings",
+    CONTROL_PANEL: "/control-panel"
   };
   static LOGGED_USER = "loggedUser";
+  static ROLES = {
+    USER: 0,
+    ADMIN: 1
+  }
 }
 
 Object.freeze(constants);
