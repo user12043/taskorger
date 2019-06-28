@@ -6,7 +6,9 @@
 
 import React from "react";
 import {Button, Col, Container, Form, FormGroup, Input, Label} from 'reactstrap';
+import constants from "../constants"
 import "../css/login.css";
+import {withRouter} from "react-router-dom";
 
 class Login extends React.Component {
   constructor(props) {
@@ -19,6 +21,11 @@ class Login extends React.Component {
     // register custom methods
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+
+    //redirect to login if not
+    if (this.props.location.pathname !== constants.ROUTES.LOGIN) {
+      this.props.history.push(constants.ROUTES.LOGIN);
+    }
   }
 
   onSubmit(event) {
@@ -73,4 +80,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

@@ -5,14 +5,8 @@
  */
 
 import React from "react";
-import {BrowserRouter as Router, NavLink, Route} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import constants from "../constants";
-import Announcements from "../views/announcements";
-import Tasks from "../views/tasks";
-import NoteSrc from "../views/note_src";
-import Settings from "../views/settings";
-import ControlPanel from "../views/control_panel";
-
 import {
   Collapse,
   DropdownItem,
@@ -44,12 +38,7 @@ class AppNavBar extends React.Component {
   }
 
   render() {
-    let routes = [
-      <Route exact key="0" path={constants.ROUTES.ANNOUNCEMENTS} component={Announcements}/>,
-      <Route exact key="1" path={constants.ROUTES.TASKS} component={Tasks}/>,
-      <Route exact key="2" path={constants.ROUTES.NOTE_SRC} component={NoteSrc}/>,
-      <Route exact key="3" path={constants.ROUTES.SETTINGS} component={Settings}/>
-    ];
+
 
     let navItems = [
       <NavItem key="0"><NavLink to={constants.ROUTES.ANNOUNCEMENTS}
@@ -60,9 +49,6 @@ class AppNavBar extends React.Component {
     ];
 
     if (this.props.user.role === constants.ROLES.ADMIN) {
-      routes.push(
-        <Route key={routes.length} path={constants.ROUTES.CONTROL_PANEL} component={ControlPanel}/>
-      );
       navItems.push(
         <NavItem key={navItems.length}><NavLink to={constants.ROUTES.CONTROL_PANEL} className="nav-link">Control
           Panel</NavLink></NavItem>
@@ -70,36 +56,32 @@ class AppNavBar extends React.Component {
     }
 
     return (
-      <Router>
-        <Navbar color="dark" dark expand="md">
-          <NavbarBrand color="light" href="/">Taskorger</NavbarBrand>
-          <NavbarToggler onClick={this.toggle}/>
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              {navItems}
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  {this.state.user.username} ({this.state.user.name})
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    Profile
-                  </DropdownItem>
-                  <DropdownItem>
-                    Messages
-                  </DropdownItem>
-                  <DropdownItem divider/>
-                  <DropdownItem onClick={this.props.onLogout}>
-                    Logout
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </Nav>
-          </Collapse>
-        </Navbar>
-
-        {routes}
-      </Router>
+      <Navbar color="dark" dark expand="md">
+        <NavbarBrand color="light" href="/" style={{fontSize: "1.7em"}}>Taskorger</NavbarBrand>
+        <NavbarToggler onClick={this.toggle}/>
+        <Collapse isOpen={this.state.isOpen} navbar>
+          <Nav className="ml-auto" navbar>
+            {navItems}
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                {this.state.user.username} ({this.state.user.name})
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>
+                  Profile
+                </DropdownItem>
+                <DropdownItem>
+                  Messages
+                </DropdownItem>
+                <DropdownItem divider/>
+                <DropdownItem onClick={this.props.onLogout}>
+                  Logout
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Nav>
+        </Collapse>
+      </Navbar>
     );
   }
 }

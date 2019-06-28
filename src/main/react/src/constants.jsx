@@ -14,9 +14,11 @@ class constants {
     TASKS: "/tasks",
     NOTE_SRC: "/note-src",
     SETTINGS: "/settings",
-    CONTROL_PANEL: "/control-panel"
+    CONTROL_PANEL: "/control-panel",
+    LOGIN: "/login  "
   };
   static LOGGED_USER = "loggedUser";
+  static USER_ADMIN = "userAdmin";
   static ROLES = {
     USER: 0,
     ADMIN: 1
