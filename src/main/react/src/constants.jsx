@@ -15,7 +15,12 @@ class constants {
     NOTE_SRC: "/note-src",
     SETTINGS: "/settings",
     CONTROL_PANEL: "/control-panel",
-    LOGIN: "/login  "
+    CONTROL_PANEL_SUB: {
+      USER_MAN: "/control-panel/user-man",
+      ANNOUNCEMENT_MAN: "/control-panel/announcement-man",
+      TASK_MAN: "/control-panel/task-man"
+    },
+    LOGIN: "/login"
   };
   static LOGGED_USER = "loggedUser";
   static USER_ADMIN = "userAdmin";

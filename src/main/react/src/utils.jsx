@@ -13,11 +13,13 @@ export function handleFetchError(response) {
   return response;
 }
 
-export function apiReq(path, callback) {
+export function apiReq(path, callback, notEmbedded) {
   fetch(constants.API_ROOT + path)
     .then(handleFetchError)
     .then((response) => response.json())
-    .then((data) => callback(data))
+    .then((data) => callback(
+      (notEmbedded) ? data : (data["_embedded"])
+    ))
     .catch((response) => {
       alert("fetching failed!: " + response.message);
     });

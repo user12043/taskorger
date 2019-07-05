@@ -2,7 +2,7 @@
 import React from 'react';
 import constants from "./constants";
 import {Route, Switch, withRouter} from "react-router-dom";
-import * as util from "./utils";
+import * as utils from "./utils";
 import "./css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css"
 import AppNavBar from "./components/navbar";
@@ -11,7 +11,7 @@ import Announcements from "./views/announcements";
 import Tasks from "./views/tasks";
 import NoteSrc from "./views/note_src";
 import Settings from "./views/settings";
-import ControlPanel from "./views/control_panel";
+import ControlPanel from "./views/control_panel/control_panel";
 
 class App extends React.Component {
   constructor(props) {
@@ -24,8 +24,8 @@ class App extends React.Component {
   }
 
   onLogin(username, password) {
-    util.apiReq("user/search/findByUserNameAndPassword?username=" + username + "&password=" + password, (data) => {
-      let user = data["_embedded"]["user"];
+    utils.apiReq("user/search/findByUserNameAndPassword?username=" + username + "&password=" + password, (data) => {
+      let user = data["user"];
       if (user[0]) {
         console.log("login success");
         localStorage.setItem(constants.LOGGED_USER, JSON.stringify(user[0]));

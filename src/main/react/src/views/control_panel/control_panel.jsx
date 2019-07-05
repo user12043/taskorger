@@ -5,7 +5,11 @@
  */
 
 import React from "react";
-import "../css/control-panel.css";
+import "../../css/control-panel.css";
+import {Link, Route, Switch} from "react-router-dom";
+import constants from "../../constants";
+import UserManagement from "./user_management";
+import {Container} from "reactstrap";
 
 class SideBarItem extends React.Component {
   constructor(props) {
@@ -38,14 +42,20 @@ class ControlPanel extends React.Component {
         <div id="sidebar" className="text-sm-left text-md-center bg-secondary">
           <div id="sidebar-header" className="bg-info">Options</div>
           <div id="sidebar-content">
-            <SideBarItem>item1</SideBarItem>
-            <SideBarItem>item2</SideBarItem>
-            <SideBarItem>item3</SideBarItem>
-            <SideBarItem>item4</SideBarItem>
+            <SideBarItem><Link to={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN}>User Management</Link></SideBarItem>
+            <SideBarItem><Link to={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN}>Announcement
+              Management</Link></SideBarItem>
+            <SideBarItem><Link to={constants.ROUTES.CONTROL_PANEL_SUB.TASK_MAN}>Task Management</Link></SideBarItem>
           </div>
         </div>
 
-        <h1>This is control panel page</h1>
+        <Container className="control-content">
+          <Switch>
+            <Route path={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN} component={UserManagement}/>
+            <Route path={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN}><h1>Announcement Management</h1></Route>
+            <Route path={constants.ROUTES.CONTROL_PANEL_SUB.TASK_MAN}><h1>Task Management</h1></Route>
+          </Switch>
+        </Container>
       </div>
     );
   }

@@ -28,3 +28,15 @@
     height: 100%;
     align-items: center;
 }
+
+.control-content {
+    padding-top: 30px;
+}
+
+.add-button {
+    margin: 5px;
+}
+
+.data-form {
+    padding: 10px;
+}
