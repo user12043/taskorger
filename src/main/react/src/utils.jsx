@@ -13,14 +13,32 @@ export function handleFetchError(response) {
   return response;
 }
 
-export function apiReq(path, callback, notEmbedded) {
-  fetch(constants.API_ROOT + path)
+export function apiReq(path, callback, options, notEmbedded) {
+  fetch((notEmbedded) ? path : (constants.API_ROOT) + path, {
+      ...options, ...{
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  )
     .then(handleFetchError)
-    .then((response) => response.json())
-    .then((data) => callback(
-      (notEmbedded) ? data : (data["_embedded"])
-    ))
+    .then((response) => {
+      if (response.status === 201 || response.status === 204) {
+        return response.text();
+      } else {
+        return response.json();
+      }
+    })
+    .then((data) => {
+      callback((notEmbedded) ? data : (data["_embedded"]))
+    })
     .catch((response) => {
       alert("fetching failed!: " + response.message);
     });
+}
+
+export function getSelfLink(entityObject) {
+  return entityObject["_links"]["self"]["href"];
 }

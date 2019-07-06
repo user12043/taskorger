@@ -30,7 +30,7 @@ public class User {
     @NotNull
     @Column(unique = true)
     @Length(max = 30)
-    private String userName;
+    private String username;
 
     @NotNull
 //    @JsonIgnore // This ignores both reading and writing

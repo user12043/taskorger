@@ -15,7 +15,8 @@ class Login extends React.Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      submitted: false
     };
 
     // register custom methods
@@ -30,8 +31,11 @@ class Login extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
+    this.setState({submitted: true});
     console.log("login: ", this.state.username + ", " + this.state.password);
-    this.props.onLogin(this.state.username, this.state.password);
+    if (!this.props.onLogin(this.state.username, this.state.password)) {
+      this.setState({submitted: false});
+    }
   }
 
   onChange(event) {
@@ -71,7 +75,7 @@ class Login extends React.Component {
               />
             </FormGroup>
           </Col>
-          <Button disabled={!this.validateForm()}
+          <Button disabled={!this.validateForm() && !this.state.submitted}
                   type="submit"
           >Submit</Button>
         </Form>

@@ -38,8 +38,6 @@ class AppNavBar extends React.Component {
   }
 
   render() {
-
-
     let navItems = [
       <NavItem key="0"><NavLink to={constants.ROUTES.ANNOUNCEMENTS}
                                 className="nav-link">Announcements</NavLink></NavItem>,
@@ -50,13 +48,13 @@ class AppNavBar extends React.Component {
 
     if (this.props.user.role === constants.ROLES.ADMIN) {
       navItems.push(
-        <NavItem key={navItems.length}><NavLink to={constants.ROUTES.CONTROL_PANEL} className="nav-link">Control
+        <NavItem key={navItems.length}><NavLink to={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN} className="nav-link">Control
           Panel</NavLink></NavItem>
       );
     }
 
     return (
-      <Navbar color="dark" dark expand="md">
+      <Navbar color="dark" dark expand="md" fixed="top">
         <NavbarBrand color="light" href="/" style={{fontSize: "1.7em"}}>Taskorger</NavbarBrand>
         <NavbarToggler onClick={this.toggle}/>
         <Collapse isOpen={this.state.isOpen} navbar>

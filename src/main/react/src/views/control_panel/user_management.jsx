@@ -5,102 +5,82 @@
  */
 
 import React from "react";
-import {Button, Collapse, Container, Form, FormGroup, Input, Label, Table} from "reactstrap";
+import {Button, ButtonGroup, Collapse, Container, Table} from "reactstrap";
 import * as utils from "../../utils";
-import constants from "../../constants";
-
-class UserForm extends React.Component {
-  static defaultProps = {
-    onSave: null
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      name: ""
-    };
-
-    this.saveUser = this.saveUser.bind(this);
-    this.handleInput = this.handleInput.bind(this);
-  }
-
-  saveUser(event) {
-    event.preventDefault();
-
-    this.props.onSave(true);
-  }
-
-  handleInput(event) {
-    this.setState({
-      [event.target.id]: event.target.value
-    })
-  }
-
-  render() {
-    if (!this.props.show) {
-      return "";
-    }
-    return (
-      <Container>
-        <Form className="border border-secondary data-form">
-          <FormGroup>
-            <Label for="username">Username: </Label>
-            <Input type="text" id="username" name="username" value={this.state.username}
-                   onChange={this.handleInput}/>
-          </FormGroup>
-          <FormGroup>
-            <Label for="name">Name: </Label>
-            <Input type="text" id="name" value={this.state.name} onChange={this.handleInput}/>
-          </FormGroup>
-          <Button color="primary" onClick={this.saveUser}>Save</Button>
-        </Form>
-      </Container>
-    );
-  }
-}
+import UserForm from "../../components/user_form";
 
 class UserManagement extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       users: [],
-      addingUser: false
+      formOpen: false,
+      editingUser: null
     };
 
     this.fetchUsers = this.fetchUsers.bind(this);
-    this.addUser = this.addUser.bind(this);
+    this.toggleForm = this.toggleForm.bind(this);
     this.userSaved = this.userSaved.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
+    this.editUser = this.editUser.bind(this);
   }
 
   fetchUsers() {
-    utils.apiReq(constants.API_ROOT + "users", (data) => {
+    utils.apiReq("user", (data) => {
       this.setState({
-        users: JSON.parse(data["user"])
+        users: data["user"]
       });
     });
   }
 
-  addUser(event) {
-    this.setState((state) => ({addingUser: !state.addingUser}));
+  toggleForm() {
+    this.setState((state) => ({
+      formOpen: !state.formOpen,
+      editingUser: null
+    }));
   }
 
   userSaved(isSuccess) {
     if (isSuccess) {
-      this.setState({addingUser: false});
+      this.setState({formOpen: false});
+      this.fetchUsers();
     } else {
       alert("failed to save user!");
     }
   }
 
+  componentWillMount() {
+    this.fetchUsers();
+  }
+
+  deleteUser(user) {
+    utils.apiReq(utils.getSelfLink(user), () => {
+      this.fetchUsers();
+    }, {
+      method: "delete"
+    }, true);
+  }
+
+  editUser(user) {
+    this.setState({
+      editingUser: user,
+      formOpen: true
+    });
+  }
+
   render() {
     let users = [];
-    this.state.users.forEach((user) => {
+    this.state.users.forEach((user, index) => {
       users.push(
-        <tr>
-          <td>{user.id}</td>
+        <tr key={index}>
           <td>{user.username}</td>
           <td>{user.name}</td>
+          <td style={{width: "1px"}}>
+            <ButtonGroup>
+              <Button color="primary" onClick={() => this.editUser(user)} outline>Edit</Button>
+              <Button color="danger" onClick={() => this.deleteUser(user)} outline>Delete</Button>
+            </ButtonGroup>
+          </td>
         </tr>
       );
     });
@@ -108,16 +88,16 @@ class UserManagement extends React.Component {
       <Container className="border border-info bg-dark text-light">
         <hr/>
         <h3>Users</h3>
-        <Button className="add-button" color="primary" onClick={this.addUser} outline>Add User</Button>
-        <hr/>
-        <Collapse isOpen={this.state.addingUser}>
-          <UserForm show={this.state.addingUser} onSave={this.userSaved}/>
+        <Button className="add-button" color="primary" onClick={this.toggleForm} outline style={{marginBottom: "1rem"}}>
+          Add User
+        </Button>
+        <Collapse isOpen={this.state.formOpen}>
+          <UserForm onSave={this.userSaved} user={this.state.editingUser}/>
         </Collapse>
         <hr/>
-        <Table className="text-light table-bordered">
+        <Table className="text-light table-bordered table-responsive-sm">
           <thead>
           <tr>
-            <th>Id</th>
             <th>Username</th>
             <th>Name</th>
             <th>Options</th>

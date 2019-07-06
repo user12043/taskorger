@@ -1,36 +1,12 @@
 #control-panel {
-    height: 100%;
-    position: fixed;
-    width: 100%;
-    display: flex;
-}
-
-#sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    color: #fff;
-    transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
-    transform-origin: bottom left;
     min-height: 100%;
-    z-index: 999;
-}
-
-#sidebar.active {
-    margin-left: -250px;
-    transform: rotateY(100deg);
-}
-
-#sidebar-header {
-    font-size: 1.3em;
-}
-
-#sidebar-content {
-    height: 100%;
-    align-items: center;
+    min-width: 100%;
+    display: flex;
 }
 
 .control-content {
     padding-top: 30px;
+    padding-left: 30px;
 }
 
 .add-button {

@@ -24,7 +24,7 @@ class App extends React.Component {
   }
 
   onLogin(username, password) {
-    utils.apiReq("user/search/findByUserNameAndPassword?username=" + username + "&password=" + password, (data) => {
+    utils.apiReq("user/search/findByUsernameAndPassword?username=" + username + "&password=" + password, (data) => {
       let user = data["user"];
       if (user[0]) {
         console.log("login success");
@@ -39,6 +39,7 @@ class App extends React.Component {
       } else {
         alert("login failed");
         localStorage.removeItem(constants.LOGGED_USER);
+        return false;
       }
     });
   }
