@@ -1,9 +1,7 @@
 package ogr.user12043.taskorger.exceptionhandle;
 
-import ogr.user12043.taskorger.utils.Constants;
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -31,9 +29,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     // should return 400
     @ExceptionHandler({ConversionFailedException.class})
     public ResponseEntity conversionFailed(HttpServletRequest request, ConversionFailedException e) {
-        HttpHeaders headers = new HttpHeaders();
-        //redirect to http cats error page
-        headers.add("Location", Constants.HTTP_CATS_URI + HttpStatus.BAD_REQUEST.value());
-        return new ResponseEntity<>("No such request", headers, HttpStatus.FOUND);
+        return new ResponseEntity<>("No such request", HttpStatus.BAD_REQUEST);
     }
 }
