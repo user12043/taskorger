@@ -38,15 +38,25 @@ class UserForm extends React.Component {
 
   saveUser(event) {
     event.preventDefault();
+    let userEntity;
+    if (this.props.user) {
+      let selfUrl = utils.getSelfLink(this.props.user);
+      userEntity = {
+        id: +selfUrl.substr(selfUrl.lastIndexOf("/") + 1)
+      };
+    }
     utils.apiReq("user", () => {
       this.props.onSave();
     }, {
       method: "post",
       body: JSON.stringify({
-        username: this.state.username,
-        name: this.state.name,
-        password: this.state.password,
-        createDate: new Date()
+        ...userEntity,
+        ...{
+          username: this.state.username,
+          name: this.state.name,
+          password: this.state.password,
+          createDate: new Date()
+        }
       })
     }, (response) => {
       this.setState({error: "Saving failed: " + response.message});
