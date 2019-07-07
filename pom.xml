@@ -21,7 +21,7 @@
     <lib-folder>lib</lib-folder>
     <lombok.version>1.18.8</lombok.version>
     <jpa.version>2.2</jpa.version>
-    <postgresql.version>42.2.5</postgresql.version>
+    <h2.version>1.4.199</h2.version>
     <hibernate.version>5.4.3.Final</hibernate.version>
     <spring-boot.version>2.1.5.RELEASE</spring-boot.version>
   </properties>
@@ -41,9 +41,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>${postgresql.version}</version>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>${h2.version}</version>
     </dependency>
 
     <dependency>
