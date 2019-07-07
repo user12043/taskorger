@@ -40,13 +40,9 @@ class UserManagement extends React.Component {
     }));
   }
 
-  userSaved(isSuccess) {
-    if (isSuccess) {
-      this.setState({formOpen: false});
-      this.fetchUsers();
-    } else {
-      alert("failed to save user!");
-    }
+  userSaved() {
+    this.setState({formOpen: false});
+    this.fetchUsers();
   }
 
   componentWillMount() {
@@ -58,7 +54,7 @@ class UserManagement extends React.Component {
       this.fetchUsers();
     }, {
       method: "delete"
-    }, true);
+    });
   }
 
   editUser(user) {
@@ -88,8 +84,11 @@ class UserManagement extends React.Component {
       <Container className="border border-info bg-dark text-light">
         <hr/>
         <h3>Users</h3>
-        <Button className="add-button" color="primary" onClick={this.toggleForm} outline style={{marginBottom: "1rem"}}>
-          Add User
+        <Button className="add-button" color={(this.state.formOpen) ? "danger" : "primary"}
+                onClick={this.toggleForm}
+                outline style={{marginBottom: "1rem"}}
+        >
+          {(this.state.formOpen) ? "Cancel" : "Add User"}
         </Button>
         <Collapse isOpen={this.state.formOpen}>
           <UserForm onSave={this.userSaved} user={this.state.editingUser}/>

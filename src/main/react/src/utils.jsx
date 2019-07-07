@@ -13,7 +13,7 @@ export function handleFetchError(response) {
   return response;
 }
 
-export function apiReq(path, callback, options, notEmbedded) {
+export function apiReq(path, callback, options, error, notEmbedded) {
   fetch((notEmbedded) ? path : (constants.API_ROOT) + path, {
       ...options, ...{
         headers: {
@@ -35,10 +35,15 @@ export function apiReq(path, callback, options, notEmbedded) {
       callback((notEmbedded) ? data : (data["_embedded"]))
     })
     .catch((response) => {
-      alert("fetching failed!: " + response.message);
+      if (error) {
+        error(response);
+      } else {
+        alert("fetching failed!: " + response.message);
+      }
     });
 }
 
 export function getSelfLink(entityObject) {
-  return entityObject["_links"]["self"]["href"];
+  let url = entityObject["_links"]["self"]["href"];
+  return url.substr(url.lastIndexOf("api/") + 4);
 }
