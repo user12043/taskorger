@@ -77,8 +77,11 @@ class App extends React.Component {
       }
     } else {
       // not logged in
-      //add login route
-      routes = <Route key={routes.length}><Login onLogin={this.onLogin}/></Route>;
+      // add login route and redirect
+      routes = <Route key={routes.length} path={constants.ROUTES.LOGIN}><Login onLogin={this.onLogin}/></Route>;
+      if (this.props.location.pathname !== constants.ROUTES.LOGIN) {
+        this.props.history.push(constants.ROUTES.LOGIN);
+      }
     }
     return (
       <div id="appContainer">
