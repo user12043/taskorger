@@ -8,6 +8,7 @@ import React from "react";
 import {Collapse, Nav, Navbar, NavbarToggler, NavItem} from "reactstrap";
 import {NavLink} from "react-router-dom";
 import constants from "../constants";
+import "../css/control-panel.css";
 
 class SideBarItem extends React.Component {
   constructor(props) {
@@ -52,18 +53,14 @@ class ControlPanelSidebar extends React.Component {
   }
 
   render() {
-    let toggleButtonStyle = (!this.state.isOpen) ? {
-      transform: "rotate(270deg)",
-      marginTop: "60px",
-      width: "20px"
-    } : {};
-
     return (
-      <Navbar color="secondary" dark className="text-sm-left text-md-center bg-secondary position-fixed"
-              style={{display: "block", height: "100%"}}
+      <Navbar id="control-panel-sidebar" color="secondary" dark
+              className={"text-sm-left text-md-center bg-secondary position-fixed"}
               expand="md">
-        <NavbarToggler className="text-light" onClick={this.toggle}
-                       style={toggleButtonStyle}>Options</NavbarToggler>
+        <NavbarToggler id="control-panel-sidebar-toggle"
+                       className={"text-light " + ((this.state.isOpen) ? "" : "closed")}
+                       onClick={this.toggle}
+        >Options</NavbarToggler>
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" vertical navbar>
             <SideBarItem>

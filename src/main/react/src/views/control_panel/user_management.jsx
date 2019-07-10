@@ -81,16 +81,15 @@ class UserManagement extends React.Component {
       );
     });
     return (
-      <Container className="border border-info bg-dark text-light">
-        <hr/>
+      <Container className="border border-info bg-dark text-light pt-2">
         <h3>Users</h3>
         <Button className="add-button" color={(this.state.formOpen) ? "danger" : "primary"}
                 onClick={this.toggleForm}
-                outline style={{marginBottom: "1rem"}}
+                outline
         >
           {(this.state.formOpen) ? "Cancel" : "Add User"}
         </Button>
-        <Collapse isOpen={this.state.formOpen}>
+        <Collapse isOpen={this.state.formOpen} className="mt-2">
           <UserForm onSave={this.userSaved} user={this.state.editingUser}/>
         </Collapse>
         <hr/>

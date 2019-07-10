@@ -11,6 +11,7 @@ import constants from "../../constants";
 import UserManagement from "./user_management";
 import {Container} from "reactstrap";
 import ControlPanelSidebar from "../../components/control-panel-sidebar";
+import AnnouncementManagement from "./announcement_management";
 
 class ControlPanel extends React.Component {
   render() {
@@ -21,7 +22,7 @@ class ControlPanel extends React.Component {
         <Container className="control-content">
           <Switch>
             <Route path={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN} component={UserManagement}/>
-            <Route path={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN}><h1>Announcement Management</h1></Route>
+            <Route path={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN} component={AnnouncementManagement}/>
             <Route path={constants.ROUTES.CONTROL_PANEL_SUB.TASK_MAN}><h1>Task Management</h1></Route>
           </Switch>
         </Container>
