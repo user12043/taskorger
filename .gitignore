@@ -254,3 +254,6 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+
+### Database files
+*.mv.db
