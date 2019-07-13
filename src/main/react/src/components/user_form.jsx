@@ -79,14 +79,12 @@ class UserForm extends React.Component {
   }
 
   render() {
-    let errorAlert = "";
-    if (this.state.error) {
-      errorAlert = <Alert color="danger">{this.state.error}</Alert>;
-    }
 
     return (
       <Container>
-        {errorAlert}
+        {(this.state.error) &&
+        <Alert color="danger">{this.state.error}</Alert>
+        }
         <Form className="border border-secondary data-form" onSubmit={this.saveUser}>
           <FormGroup>
             <Label for="username">Username: </Label>

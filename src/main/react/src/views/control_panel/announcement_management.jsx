@@ -6,20 +6,41 @@
 
 
 import React from "react";
-import Container from "reactstrap/es/Container";
+import DataControl from "../../components/data_control";
+import * as utils from "../../utils";
 
 class AnnouncementManagement extends React.Component {
   constructor(props) {
     super(props);
 
+    this.fetchAnnouncements = this.fetchAnnouncements.bind(this);
+  }
+
+  fetchAnnouncements() {
+    utils.apiReq("announcement", (data) => {
+      this.setState({
+        announcements: data["announcement"]
+      });
+    });
+  }
+
+  componentWillMount() {
+    this.fetchAnnouncements();
   }
 
   render() {
     return (
-      <Container className="border border-info bg-dark text-light pt-2">
-        <h3>Announcement Management</h3>
-
-      </Container>
+      <DataControl
+        fields={[
+          {name: "Field 1", key: "f1", type: "text"},
+          {name: "Field 2", key: "f2", type: "text"},
+          {name: "Field 3", key: "f3", type: "password"},
+        ]}
+        data={[
+          {f1: "f1value", f2: "f2value", f3: "f3value"}
+        ]}
+        header="Announcement Management"
+      />
     );
   }
 }

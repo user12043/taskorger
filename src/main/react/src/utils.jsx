@@ -47,3 +47,8 @@ export function getSelfLink(entityObject) {
   let url = entityObject["_links"]["self"]["href"];
   return url.substr(url.lastIndexOf("api/") + 4);
 }
+
+export function getIdFromSelfLink(entityObject) {
+  let selfLink = getSelfLink(entityObject);
+  return +selfLink.substr(selfLink.lastIndexOf("/") + 1);
+}

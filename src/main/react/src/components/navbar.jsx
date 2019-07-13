@@ -46,13 +46,6 @@ class AppNavBar extends React.Component {
       <NavItem key="3"><NavLink to={constants.ROUTES.SETTINGS} className="nav-link">Settings</NavLink></NavItem>
     ];
 
-    if (this.props.user.role === constants.ROLES.ADMIN) {
-      navItems.push(
-        <NavItem key={navItems.length}><NavLink to={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN} className="nav-link">Control
-          Panel</NavLink></NavItem>
-      );
-    }
-
     return (
       <Navbar color="dark" dark expand="md" fixed="top">
         <NavbarBrand color="light" href="/" style={{fontSize: "1.7em"}}>Taskorger</NavbarBrand>
@@ -60,6 +53,11 @@ class AppNavBar extends React.Component {
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>
             {navItems}
+            {(this.props.user.role === constants.ROLES.ADMIN) &&
+            <NavItem key={navItems.length}>
+              <NavLink to={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN} className="nav-link">Control Panel</NavLink>
+            </NavItem>
+            }
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 {this.state.user.username} ({this.state.user.name})
