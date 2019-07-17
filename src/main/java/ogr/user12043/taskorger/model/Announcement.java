@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * Created on 27.06.2019 - 23:19
@@ -21,4 +22,10 @@ public class Announcement {
 
     @NotNull
     private String content;
+
+    @NotNull
+    private Date createDate;
+
+    @NotNull
+    private Date updateDate = new Date();
 }

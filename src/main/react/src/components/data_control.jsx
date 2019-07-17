@@ -6,8 +6,9 @@
 
 
 import React from "react";
-import {Button, Collapse, Container, Table} from "reactstrap";
+import {Button, ButtonGroup, Collapse, Container, Table} from "reactstrap";
 import DataForm from "./data_form";
+import * as utils from "../utils";
 
 class DataControl extends React.Component {
   static defaultProps = {
@@ -21,32 +22,58 @@ class DataControl extends React.Component {
     super(props);
 
     this.toggleForm = this.toggleForm.bind(this);
+    this.editEntity = this.editEntity.bind(this);
+    this.deleteEntity = this.deleteEntity.bind(this);
+    this.onSave = this.onSave.bind(this);
     this.state = {
-      formOpen: false
+      formOpen: false,
+      editingEntity: null
     }
   }
 
   toggleForm() {
     this.setState((state) => ({
       formOpen: !state.formOpen,
-      editingUser: null
+      editingEntity: null
     }));
+  }
+
+  onSave() {
+    this.setState({
+      formOpen: false,
+      editingEntity: null
+    });
+    this.props.onSave && this.props.onSave();
+  }
+
+  editEntity(entity) {
+    this.setState({editingEntity: entity, formOpen: true});
+  }
+
+  deleteEntity(entity) {
+    utils.apiReq(utils.getSelfLink(entity),
+      () => this.props.onSave && this.props.onSave(),
+      {
+        method: "delete"
+      }, (response) => console.log(response.message));
   }
 
   render() {
     return (
-      <Container className="border border-info bg-dark text-light pt-2">
+      <Container className="border border-info bg-dark text-light pt-2 ml-5 ml-md-0">
         <h3>{this.props.header}</h3>
         <Button className="add-button" color={(this.state.formOpen) ? "danger" : "primary"}
                 onClick={this.toggleForm}
                 outline
         >
-          {(this.state.formOpen) ? "Cancel" : "Add User"}
+          {(this.state.formOpen) ? "Cancel" : "Add"}
         </Button>
         <Collapse isOpen={this.state.formOpen} className="mt-2">
-          <DataForm onSave={this.props.onSave}
+          <DataForm onSave={this.onSave}
                     currentData={this.props.currentData}
                     fields={this.props.fields}
+                    entity={this.state.editingEntity}
+                    api={this.props.api}
           />
         </Collapse>
         <hr/>
@@ -54,11 +81,20 @@ class DataControl extends React.Component {
           <thead>
           <tr>
             {this.props.fields.map((field, index) => <th key={index}>{field.name}</th>)}
+            <th>Options</th>
           </tr>
           </thead>
           <tbody>
-          {this.props.data.map((entity, index) => <tr key={index}>{this.props.fields.map((field, index) => <td
-            key={index}>{entity[field.key]}</td>)}</tr>)}
+          {this.props.data.map((entity, index) => (
+            <tr key={index}>{this.props.fields.map((field, index) => <td key={index}>{entity[field.key]}</td>)}
+              <td>
+                <ButtonGroup>
+                  <Button color="primary" onClick={() => this.editEntity(entity)} outline>Edit</Button>
+                  <Button color="danger" onClick={() => this.deleteEntity(entity)} outline>Delete</Button>
+                </ButtonGroup>
+              </td>
+            </tr>
+          ))}
           </tbody>
         </Table>
       </Container>

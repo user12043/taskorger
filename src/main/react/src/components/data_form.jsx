@@ -12,7 +12,7 @@ class DataForm extends React.Component {
     fields: [],
     onSave: null,
     api: "",
-    entity: {}
+    entity: null
   };
 
   constructor(props) {
@@ -23,8 +23,8 @@ class DataForm extends React.Component {
     this.save = this.save.bind(this);
 
     let fieldsObject = {};
-    this.props.fields.forEach((element) => {
-      fieldsObject[element.key] = element.defaultValue || "";
+    this.props.fields.forEach((field) => {
+      fieldsObject[field.key] = field.defaultValue || "";
     });
     this.state = {
       ...{
@@ -35,7 +35,7 @@ class DataForm extends React.Component {
 
   validateForm() {
     let valid = false;
-    this.props.fields.forEach((field) => {
+    this.props.fields.filter((field) => !field.hideInput).forEach((field) => {
       valid = this.state[field.key] && this.state[field.key].length
     });
     return valid;
@@ -45,23 +45,47 @@ class DataForm extends React.Component {
     event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value
-    })
+    });
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    let newState = {};
+    if (!nextProps.entity) {
+      nextProps.fields.forEach((field) => {
+        newState[field.key] = field.defaultValue || "";
+      });
+    } else {
+      nextProps.fields.forEach((field) => {
+        if (nextProps.entity[field.key]) {
+          newState[field.key] = nextProps.entity[field.key];
+        }
+      });
+    }
+    this.setState(newState);
   }
 
   save(event) {
     event.preventDefault();
-    let entity;
+    let entity = {};
     if (this.props.entity) {
+      entity = this.props.entity;
+      entity.id = utils.getIdFromSelfLink(this.props.entity);
+    } else {
       entity = {
-        id: utils.getIdFromSelfLink(this.props.entity)
-      };
+        createDate: new Date()
+      }
     }
 
+    let that = this;
     this.props.fields.forEach((field) => {
-      entity[field.key] = this.state[field.key];
+      if (!field.hideInput) {
+        entity[field.key] = that.state[field.key];
+      }
     });
     utils.apiReq(this.props.api, () => {
-      this.props.onSave();
+      if (this.props.onSave) {
+        this.props.onSave();
+      }
     }, {
       method: "post",
       body: JSON.stringify(entity)
@@ -74,9 +98,9 @@ class DataForm extends React.Component {
         {(this.state.error) &&
         <Alert color="danger">{this.state.error}</Alert>
         }
-        <Form className="border border-secondary data-form" onSubmit={this.props.save}>
+        <Form className="border border-secondary data-form" onSubmit={this.save}>
           {this.props.fields.map((field) => (
-            <FormGroup key={field.key}>
+            !field.hideInput && <FormGroup key={field.key}>
               <Label for={field.key}>{field.name}: </Label>
               <Input type={field.type} id={field.key} name={field.key} value={this.state[field.key]}
                      onChange={this.handleInput}/>
