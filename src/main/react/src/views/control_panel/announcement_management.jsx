@@ -4,9 +4,8 @@
  * @author user12043
  */
 
-
 import React from "react";
-import DataControl from "../../components/data_control";
+import DataControl from "../../components/control_panel.data_control";
 import * as utils from "../../utils";
 
 class AnnouncementManagement extends React.Component {

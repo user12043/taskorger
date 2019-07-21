@@ -10,7 +10,7 @@ import {Route, Switch} from "react-router-dom";
 import constants from "../../constants";
 import UserManagement from "./user_management";
 import {Container} from "reactstrap";
-import ControlPanelSidebar from "../../components/control-panel-sidebar";
+import ControlPanelSidebar from "../../components/control_panel.sidebar";
 import AnnouncementManagement from "./announcement_management";
 
 class ControlPanel extends React.Component {
