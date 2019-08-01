@@ -38,8 +38,8 @@ class UserManagement extends React.Component {
                      {name: "Username", key: "username", type: "text"},
                      {name: "Password", key: "password", type: "password"},
                      {name: "Role", key: "role", type: "number", defaultValue: "0"},
-                     {name: "Create date", key: "createDate", type: "text", hideInput: true},
-                     {name: "Update date", key: "updateDate", type: "text", hideInput: true}
+                     {name: "Create date", key: "createDate", type: "date", hideInput: true},
+                     {name: "Update date", key: "updateDate", type: "date", hideInput: true}
                    ]}
                    data={this.state.users}
                    header="User Management"
