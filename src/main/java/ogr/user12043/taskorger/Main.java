@@ -32,7 +32,7 @@ public class Main {
     // Create administrator user if none exists
     @EventListener(ApplicationReadyEvent.class)
     public void afterStart() {
-        final List<User> admins = userDao.findByRole((byte) UserRoles.USER.ordinal());
+        final List<User> admins = userDao.findByRole((byte) UserRoles.ADMIN.ordinal());
         if (admins.isEmpty()) {
             User adminUser = new User();
             adminUser.setName("admin");
