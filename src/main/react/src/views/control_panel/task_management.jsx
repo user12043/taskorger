@@ -7,6 +7,7 @@
 import React from "react";
 import * as util from "../../utils";
 import DataControl from "../../components/control_panel.data_control";
+import UserSelect from "../../components/user_select";
 
 class TaskManagement extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class TaskManagement extends React.Component {
   render() {
     return (
       <DataControl api="task"
-                   data={this.state.task}
+                   data={this.state.tasks}
                    header="Task Management"
                    fields={[
                      {name: "Header", key: "header", type: "text"},
@@ -43,7 +44,8 @@ class TaskManagement extends React.Component {
                      {name: "Status", key: "status", type: "number"},
                      {name: "Create Date", key: "createDate", type: "date", hideInput: true},
                      {name: "Update Date", key: "updateDate", type: "date", hideInput: true},
-                     {name: "Topic", key: "topic", type: "text"}
+                     {name: "Topic", key: "topic", type: "text"},
+                     {name: "Assignees", key: "assignees", component: <UserSelect/>}
                    ]}
       />
     )

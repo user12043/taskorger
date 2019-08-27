@@ -32,7 +32,7 @@ export function apiReq(path, callback, options, error, notEmbedded) {
       }
     })
     .then((data) => {
-      callback((notEmbedded) ? data : (data["_embedded"]))
+      callback((notEmbedded) ? data : (data["_embedded"]));
     })
     .catch((response) => {
       if (error) {

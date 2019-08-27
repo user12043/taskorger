@@ -34,11 +34,11 @@ class DataForm extends React.Component {
   }
 
   validateForm() {
-    let valid = false;
     this.props.fields.filter((field) => !field.hideInput).forEach((field) => {
-      valid = this.state[field.key] && this.state[field.key].length
+      if (!(this.state[field.key] && this.state[field.key].length)) {
+        return true;
+      }
     });
-    return valid;
   }
 
   handleInput(event) {
@@ -100,13 +100,16 @@ class DataForm extends React.Component {
         }
         <Form className="border border-secondary data-form" onSubmit={this.save}>
           {this.props.fields.map((field) => (
-            !field.hideInput && <FormGroup key={field.key}>
+            !field.hideInput &&
+            <FormGroup key={field.key}>
               <Label for={field.key}>{field.name}: </Label>
-              <Input type={field.type} id={field.key} name={field.key} value={this.state[field.key]}
-                     onChange={this.handleInput}/>
+              {!field.component ? (
+                <Input type={field.type} id={field.key} name={field.key} value={this.state[field.key]}
+                       onChange={this.handleInput}/>
+              ) : field.component}
             </FormGroup>
           ))}
-          <Button color="success" disabled={!this.validateForm()}>Save</Button>
+          <Button color="success" disabled={this.validateForm()}>Save</Button>
         </Form>
       </Container>
     );

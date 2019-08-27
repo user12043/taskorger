@@ -14,7 +14,7 @@ class DataControl extends React.Component {
   static defaultProps = {
     fields: [],
     data: null,
-    currentData: null,
+    entity: null,
     header: null
   };
 
@@ -70,14 +70,13 @@ class DataControl extends React.Component {
         </Button>
         <Collapse isOpen={this.state.formOpen} className="mt-2">
           <DataForm onSave={this.onSave}
-                    currentData={this.props.currentData}
                     fields={this.props.fields}
                     entity={this.state.editingEntity}
                     api={this.props.api}
           />
         </Collapse>
         <hr/>
-        {this.props.data ?
+        {(this.props.data && this.props.data.length) ?
           <Table className="text-light table-bordered table-responsive-sm">
             <thead>
             <tr>
@@ -98,7 +97,7 @@ class DataControl extends React.Component {
             ))}
             </tbody>
           </Table>
-          : <h3>No data</h3>
+          : <h5 className="text-center m-5">No data</h5>
         }
       </Container>
     );
