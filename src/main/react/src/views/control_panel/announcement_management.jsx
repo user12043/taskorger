@@ -15,11 +15,11 @@ class AnnouncementManagement extends React.Component {
     this.fetchAnnouncements = this.fetchAnnouncements.bind(this);
     this.state = {
       announcements: []
-    }
+    };
   }
 
   fetchAnnouncements() {
-    utils.apiReq("announcement", (data) => {
+    utils.apiReq("announcement", data => {
       this.setState({
         announcements: data["announcement"]
       });
@@ -32,15 +32,26 @@ class AnnouncementManagement extends React.Component {
 
   render() {
     return (
-      <DataControl api="announcement"
-                   fields={[
-                     {name: "Content", key: "content", type: "text"},
-                     {name: "Create date", key: "createDate", type: "text", hideInput: true},
-                     {name: "Update date", key: "updateDate", type: "text", hideInput: true}
-                   ]}
-                   data={this.state.announcements}
-                   header="Announcement Management"
-                   onSave={this.fetchAnnouncements}
+      <DataControl
+        api="announcement"
+        fields={[
+          { name: "Content", key: "content", type: "text" },
+          {
+            name: "Create date",
+            key: "createDate",
+            type: "text",
+            hideInput: true
+          },
+          {
+            name: "Update date",
+            key: "updateDate",
+            type: "text",
+            hideInput: true
+          }
+        ]}
+        data={this.state.announcements}
+        header="Announcement Management"
+        onSave={this.fetchAnnouncements}
       />
     );
   }

@@ -26,7 +26,7 @@ class constants {
   static ROLES = {
     USER: 0,
     ADMIN: 1
-  }
+  };
 }
 
 Object.freeze(constants);

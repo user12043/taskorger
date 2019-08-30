@@ -8,7 +8,7 @@ import React from "react";
 
 class NoteSrc extends React.Component {
   render() {
-    return (<h1>This is note-sources page</h1>);
+    return <h1>This is note-sources page</h1>;
   }
 }
 

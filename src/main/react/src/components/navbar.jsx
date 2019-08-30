@@ -18,7 +18,7 @@ import {
   NavbarToggler,
   NavItem,
   UncontrolledDropdown
-} from 'reactstrap';
+} from "reactstrap";
 
 class AppNavBar extends React.Component {
   constructor(props) {
@@ -39,37 +39,55 @@ class AppNavBar extends React.Component {
 
   render() {
     let navItems = [
-      <NavItem key="0"><NavLink to={constants.ROUTES.ANNOUNCEMENTS}
-                                className="nav-link">Announcements</NavLink></NavItem>,
-      <NavItem key="1"><NavLink to={constants.ROUTES.TASKS} className="nav-link">Tasks</NavLink></NavItem>,
-      <NavItem key="2"><NavLink to={constants.ROUTES.NOTE_SRC} className="nav-link">Note-Sources</NavLink></NavItem>,
-      <NavItem key="3"><NavLink to={constants.ROUTES.SETTINGS} className="nav-link">Settings</NavLink></NavItem>
+      <NavItem key="0">
+        <NavLink to={constants.ROUTES.ANNOUNCEMENTS} className="nav-link">
+          Announcements
+        </NavLink>
+      </NavItem>,
+      <NavItem key="1">
+        <NavLink to={constants.ROUTES.TASKS} className="nav-link">
+          Tasks
+        </NavLink>
+      </NavItem>,
+      <NavItem key="2">
+        <NavLink to={constants.ROUTES.NOTE_SRC} className="nav-link">
+          Note-Sources
+        </NavLink>
+      </NavItem>,
+      <NavItem key="3">
+        <NavLink to={constants.ROUTES.SETTINGS} className="nav-link">
+          Settings
+        </NavLink>
+      </NavItem>
     ];
 
     return (
       <Navbar color="dark" dark expand="md" fixed="top">
-        <NavbarBrand color="light" href="/" style={{fontSize: "1.7em"}}>Taskorger</NavbarBrand>
-        <NavbarToggler onClick={this.toggle}/>
+        <NavbarBrand color="light" href="/" style={{ fontSize: "1.7em" }}>
+          Taskorger
+        </NavbarBrand>
+        <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>
             {navItems}
-            {(this.props.user.role === constants.ROLES.ADMIN) &&
-            <NavItem key={navItems.length}>
-              <NavLink to={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN} className="nav-link">Control Panel</NavLink>
-            </NavItem>
-            }
+            {this.props.user.role === constants.ROLES.ADMIN && (
+              <NavItem key={navItems.length}>
+                <NavLink
+                  to={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN}
+                  className="nav-link"
+                >
+                  Control Panel
+                </NavLink>
+              </NavItem>
+            )}
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 {this.state.user.username} ({this.state.user.name})
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>
-                  Profile
-                </DropdownItem>
-                <DropdownItem>
-                  Messages
-                </DropdownItem>
-                <DropdownItem divider/>
+                <DropdownItem>Profile</DropdownItem>
+                <DropdownItem>Messages</DropdownItem>
+                <DropdownItem divider />
                 <DropdownItem onClick={this.props.onLogout}>
                   Logout
                 </DropdownItem>

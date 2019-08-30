@@ -1,10 +1,10 @@
 //modules
-import React from 'react';
+import React from "react";
 import constants from "./constants";
 import {Route, Switch, withRouter} from "react-router-dom";
 import * as utils from "./utils";
 import "./css/index.css";
-import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/css/bootstrap.min.css";
 import AppNavBar from "./components/navbar";
 import Login from "./views/login";
 import Announcements from "./views/announcements";
@@ -20,28 +20,34 @@ class App extends React.Component {
     this.onLogout = this.onLogout.bind(this);
     this.state = {
       userAdmin: false
-    }
+    };
   }
 
   onLogin(username, password) {
-    utils.apiReq("user/search/findByUsernameAndPassword?username=" + username + "&password=" + password, (data) => {
-      let user = data["user"];
-      if (user[0]) {
-        console.log("login success");
-        localStorage.setItem(constants.LOGGED_USER, JSON.stringify(user[0]));
-        if (user[0].role === constants.ROLES.ADMIN) {
-          localStorage.setItem(constants.USER_ADMIN, constants.ROLES.ADMIN);
+    utils.apiReq(
+      "user/search/findByUsernameAndPassword?username=" +
+        username +
+        "&password=" +
+        password,
+      data => {
+        let user = data["user"];
+        if (user[0]) {
+          console.log("login success");
+          localStorage.setItem(constants.LOGGED_USER, JSON.stringify(user[0]));
+          if (user[0].role === constants.ROLES.ADMIN) {
+            localStorage.setItem(constants.USER_ADMIN, constants.ROLES.ADMIN);
+          } else {
+            this.forceUpdate();
+          }
+          // default route to announcements page
+          this.props.history.push(constants.ROUTES.ANNOUNCEMENTS);
         } else {
-          this.forceUpdate();
+          alert("login failed");
+          localStorage.removeItem(constants.LOGGED_USER);
+          return false;
         }
-        // default route to announcements page
-        this.props.history.push(constants.ROUTES.ANNOUNCEMENTS);
-      } else {
-        alert("login failed");
-        localStorage.removeItem(constants.LOGGED_USER);
-        return false;
       }
-    });
+    );
   }
 
   onLogout() {
@@ -54,21 +60,43 @@ class App extends React.Component {
     let routes = [];
     if (localStorage.getItem(constants.LOGGED_USER)) {
       elements.push(
-        <AppNavBar key={elements.length}
-                   user={JSON.parse(localStorage.getItem(constants.LOGGED_USER))}
-                   onLogout={this.onLogout}
+        <AppNavBar
+          key={elements.length}
+          user={JSON.parse(localStorage.getItem(constants.LOGGED_USER))}
+          onLogout={this.onLogout}
         />
       );
       routes = [
-        <Route exact key="0" path={constants.ROUTES.ANNOUNCEMENTS} component={Announcements}/>,
-        <Route exact key="1" path={constants.ROUTES.TASKS} component={Tasks}/>,
-        <Route exact key="2" path={constants.ROUTES.NOTE_SRC} component={NoteSrc}/>,
-        <Route exact key="3" path={constants.ROUTES.SETTINGS} component={Settings}/>,
+        <Route
+          exact
+          key="0"
+          path={constants.ROUTES.ANNOUNCEMENTS}
+          component={Announcements}
+        />,
+        <Route exact key="1" path={constants.ROUTES.TASKS} component={Tasks} />,
+        <Route
+          exact
+          key="2"
+          path={constants.ROUTES.NOTE_SRC}
+          component={NoteSrc}
+        />,
+        <Route
+          exact
+          key="3"
+          path={constants.ROUTES.SETTINGS}
+          component={Settings}
+        />
       ];
 
-      if (+localStorage.getItem(constants.USER_ADMIN) === constants.ROLES.ADMIN) {
+      if (
+        +localStorage.getItem(constants.USER_ADMIN) === constants.ROLES.ADMIN
+      ) {
         routes.push(
-          <Route key={routes.length} path={constants.ROUTES.CONTROL_PANEL} component={ControlPanel}/>
+          <Route
+            key={routes.length}
+            path={constants.ROUTES.CONTROL_PANEL}
+            component={ControlPanel}
+          />
         );
       }
 
@@ -78,19 +106,23 @@ class App extends React.Component {
     } else {
       // not logged in
       // add login route and redirect
-      routes = <Route key={routes.length} path={constants.ROUTES.LOGIN}><Login onLogin={this.onLogin}/></Route>;
+      routes = (
+        <Route key={routes.length} path={constants.ROUTES.LOGIN}>
+          <Login onLogin={this.onLogin} />
+        </Route>
+      );
       if (this.props.location.pathname !== constants.ROUTES.LOGIN) {
         this.props.history.push(constants.ROUTES.LOGIN);
       }
     }
     return (
       <div id="appContainer">
-        <Route>
-          {elements}
-        </Route>
+        <Route>{elements}</Route>
         <Switch>
           {routes}
-          <Route><h1>Not found (404)</h1></Route>
+          <Route>
+            <h1>Not found (404)</h1>
+          </Route>
         </Switch>
       </div>
     );

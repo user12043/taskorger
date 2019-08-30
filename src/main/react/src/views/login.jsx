@@ -5,8 +5,8 @@
  */
 
 import React from "react";
-import {Button, Col, Container, Form, FormGroup, Input, Label} from 'reactstrap';
-import constants from "../constants"
+import {Button, Col, Container, Form, FormGroup, Input, Label} from "reactstrap";
+import constants from "../constants";
 import "../css/login.css";
 import {withRouter} from "react-router-dom";
 
@@ -31,10 +31,10 @@ class Login extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    this.setState({submitted: true});
+    this.setState({ submitted: true });
     console.log("login: ", this.state.username + ", " + this.state.password);
     if (!this.props.onLogin(this.state.username, this.state.password)) {
-      this.setState({submitted: false});
+      this.setState({ submitted: false });
     }
   }
 
@@ -56,31 +56,36 @@ class Login extends React.Component {
           <Col>
             <FormGroup>
               <Label>Username</Label>
-              <Input onChange={this.onChange}
-                     type="text"
-                     name="username"
-                     id="username"
-                     placeholder="username"
+              <Input
+                onChange={this.onChange}
+                type="text"
+                name="username"
+                id="username"
+                placeholder="username"
               />
             </FormGroup>
           </Col>
           <Col>
             <FormGroup>
               <Label for="password">Password</Label>
-              <Input onChange={this.onChange}
-                     type="password"
-                     name="password"
-                     id="password"
-                     placeholder="********"
+              <Input
+                onChange={this.onChange}
+                type="password"
+                name="password"
+                id="password"
+                placeholder="********"
               />
             </FormGroup>
           </Col>
-          <Button disabled={!this.validateForm() && !this.state.submitted}
-                  type="submit"
-          >Submit</Button>
+          <Button
+            disabled={!this.validateForm() && !this.state.submitted}
+            type="submit"
+          >
+            Submit
+          </Button>
         </Form>
       </Container>
-    )
+    );
   }
 }
 

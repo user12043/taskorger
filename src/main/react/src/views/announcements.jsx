@@ -8,7 +8,7 @@ import React from "react";
 
 class Announcements extends React.Component {
   render() {
-    return (<h1>This is announcements page</h1>);
+    return <h1>This is announcements page</h1>;
   }
 }
 

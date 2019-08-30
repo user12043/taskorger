@@ -4,7 +4,7 @@
  * @author user12043
  */
 
-import constants from "./constants"
+import constants from "./constants";
 
 export function handleFetchError(response) {
   if (!response.ok) {
@@ -14,27 +14,27 @@ export function handleFetchError(response) {
 }
 
 export function apiReq(path, callback, options, error, notEmbedded) {
-  fetch((notEmbedded) ? path : (constants.API_ROOT) + path, {
-      ...options, ...{
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        }
+  fetch(notEmbedded ? path : constants.API_ROOT + path, {
+    ...options,
+    ...{
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
       }
     }
-  )
+  })
     .then(handleFetchError)
-    .then((response) => {
+    .then(response => {
       if (response.status === 201 || response.status === 204) {
         return response.text();
       } else {
         return response.json();
       }
     })
-    .then((data) => {
-      callback((notEmbedded) ? data : (data["_embedded"]));
+    .then(data => {
+      callback(notEmbedded ? data : data["_embedded"]);
     })
-    .catch((response) => {
+    .catch(response => {
       if (error) {
         error(response);
       } else {

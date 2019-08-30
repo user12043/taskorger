@@ -19,7 +19,7 @@ class UserManagement extends React.Component {
   }
 
   fetchUsers() {
-    utils.apiReq("user", (data) => {
+    utils.apiReq("user", data => {
       this.setState({
         users: data["user"]
       });
@@ -32,18 +32,29 @@ class UserManagement extends React.Component {
 
   render() {
     return (
-      <DataControl api="user"
-                   fields={[
-                     {name: "Name", key: "name", type: "text"},
-                     {name: "Username", key: "username", type: "text"},
-                     {name: "Password", key: "password", type: "password"},
-                     {name: "Role", key: "role", type: "number", defaultValue: "0"},
-                     {name: "Create date", key: "createDate", type: "date", hideInput: true},
-                     {name: "Update date", key: "updateDate", type: "date", hideInput: true}
-                   ]}
-                   data={this.state.users}
-                   header="User Management"
-                   onSave={this.fetchUsers}
+      <DataControl
+        api="user"
+        fields={[
+          { name: "Name", key: "name", type: "text" },
+          { name: "Username", key: "username", type: "text" },
+          { name: "Password", key: "password", type: "password" },
+          { name: "Role", key: "role", type: "number", defaultValue: "0" },
+          {
+            name: "Create date",
+            key: "createDate",
+            type: "date",
+            hideInput: true
+          },
+          {
+            name: "Update date",
+            key: "updateDate",
+            type: "date",
+            hideInput: true
+          }
+        ]}
+        data={this.state.users}
+        header="User Management"
+        onSave={this.fetchUsers}
       />
     );
   }

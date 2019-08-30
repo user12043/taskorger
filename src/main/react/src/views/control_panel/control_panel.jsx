@@ -18,13 +18,22 @@ class ControlPanel extends React.Component {
   render() {
     return (
       <div id="control-panel">
-        <ControlPanelSidebar/>
+        <ControlPanelSidebar />
 
         <Container className="control-content">
           <Switch>
-            <Route path={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN} component={UserManagement}/>
-            <Route path={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN} component={AnnouncementManagement}/>
-            <Route path={constants.ROUTES.CONTROL_PANEL_SUB.TASK_MAN} component={TaskManagement}/>
+            <Route
+              path={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN}
+              component={UserManagement}
+            />
+            <Route
+              path={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN}
+              component={AnnouncementManagement}
+            />
+            <Route
+              path={constants.ROUTES.CONTROL_PANEL_SUB.TASK_MAN}
+              component={TaskManagement}
+            />
           </Switch>
         </Container>
       </div>

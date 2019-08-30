@@ -15,8 +15,8 @@ class SideBarItem extends React.Component {
     super(props);
     this.handleHover = this.handleHover.bind(this);
     this.state = {
-      hovered: false,
-    }
+      hovered: false
+    };
   }
 
   handleHover(hoverState) {
@@ -26,10 +26,15 @@ class SideBarItem extends React.Component {
   }
 
   render() {
-    let bgClass = "border border-secondary " + ((this.state.hovered) ? "bg-info" : "bg-secondary");
+    let bgClass =
+      "border border-secondary " +
+      (this.state.hovered ? "bg-info" : "bg-secondary");
     return (
-      <NavItem className={bgClass} onMouseOver={() => this.handleHover(true)}
-               onMouseLeave={() => this.handleHover(false)}>
+      <NavItem
+        className={bgClass}
+        onMouseOver={() => this.handleHover(true)}
+        onMouseLeave={() => this.handleHover(false)}
+      >
         {this.props.children}
       </NavItem>
     );
@@ -43,7 +48,7 @@ class ControlPanelSidebar extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false
-    }
+    };
   }
 
   toggle() {
@@ -54,24 +59,45 @@ class ControlPanelSidebar extends React.Component {
 
   render() {
     return (
-      <Navbar id="control-panel-sidebar" color="secondary" dark
-              className={"text-sm-left text-md-center bg-secondary position-fixed"}
-              expand="md">
-        <NavbarToggler id="control-panel-sidebar-toggle"
-                       className={"text-light " + ((this.state.isOpen) ? "" : "closed")}
-                       onClick={this.toggle}
-        >Options</NavbarToggler>
+      <Navbar
+        id="control-panel-sidebar"
+        color="secondary"
+        dark
+        className={"text-sm-left text-md-center bg-secondary position-fixed"}
+        expand="md"
+      >
+        <NavbarToggler
+          id="control-panel-sidebar-toggle"
+          className={"text-light " + (this.state.isOpen ? "" : "closed")}
+          onClick={this.toggle}
+        >
+          Options
+        </NavbarToggler>
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" vertical navbar>
             <SideBarItem>
-              <NavLink to={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN} className="nav-link">User Management</NavLink>
+              <NavLink
+                to={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN}
+                className="nav-link"
+              >
+                User Management
+              </NavLink>
             </SideBarItem>
             <SideBarItem>
-              <NavLink to={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN} className="nav-link">Announcement
-                Management</NavLink>
+              <NavLink
+                to={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN}
+                className="nav-link"
+              >
+                Announcement Management
+              </NavLink>
             </SideBarItem>
             <SideBarItem>
-              <NavLink to={constants.ROUTES.CONTROL_PANEL_SUB.TASK_MAN} className="nav-link">Task Management</NavLink>
+              <NavLink
+                to={constants.ROUTES.CONTROL_PANEL_SUB.TASK_MAN}
+                className="nav-link"
+              >
+                Task Management
+              </NavLink>
             </SideBarItem>
           </Nav>
         </Collapse>

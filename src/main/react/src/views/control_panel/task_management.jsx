@@ -16,11 +16,11 @@ class TaskManagement extends React.Component {
     this.fetchTasks = this.fetchTasks.bind(this);
     this.state = {
       tasks: []
-    }
+    };
   }
 
   fetchTasks() {
-    util.apiReq("task", (data) => {
+    util.apiReq("task", data => {
       this.setState({
         tasks: data["task"]
       });
@@ -33,22 +33,33 @@ class TaskManagement extends React.Component {
 
   render() {
     return (
-      <DataControl api="task"
-                   data={this.state.tasks}
-                   header="Task Management"
-                   fields={[
-                     {name: "Header", key: "header", type: "text"},
-                     {name: "Content", key: "content", type: "text"},
-                     {name: "Priority", key: "priority", type: "number"},
-                     {name: "Deadline", key: "deadline", type: "date"},
-                     {name: "Status", key: "status", type: "number"},
-                     {name: "Create Date", key: "createDate", type: "date", hideInput: true},
-                     {name: "Update Date", key: "updateDate", type: "date", hideInput: true},
-                     {name: "Topic", key: "topic", type: "text"},
-                     {name: "Assignees", key: "assignees", component: <UserSelect/>}
-                   ]}
+      <DataControl
+        api="task"
+        data={this.state.tasks}
+        header="Task Management"
+        fields={[
+          { name: "Header", key: "header", type: "text" },
+          { name: "Content", key: "content", type: "text" },
+          { name: "Priority", key: "priority", type: "number" },
+          { name: "Deadline", key: "deadline", type: "date" },
+          { name: "Status", key: "status", type: "number" },
+          {
+            name: "Create Date",
+            key: "createDate",
+            type: "date",
+            hideInput: true
+          },
+          {
+            name: "Update Date",
+            key: "updateDate",
+            type: "date",
+            hideInput: true
+          },
+          { name: "Topic", key: "topic", type: "text" },
+          { name: "Assignees", key: "assignees", component: <UserSelect /> }
+        ]}
       />
-    )
+    );
   }
 }
 
