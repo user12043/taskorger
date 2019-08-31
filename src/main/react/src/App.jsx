@@ -1,7 +1,7 @@
 //modules
 import React from "react";
 import constants from "./constants";
-import {Route, Switch, withRouter} from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import * as utils from "./utils";
 import "./css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";

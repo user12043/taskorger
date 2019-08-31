@@ -5,10 +5,9 @@
  */
 
 import React from "react";
-import {Button, Col, Container, Form, FormGroup, Input, Label} from "reactstrap";
 import constants from "../constants";
 import "../css/login.css";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class Login extends React.Component {
   constructor(props) {
@@ -50,41 +49,45 @@ class Login extends React.Component {
 
   render() {
     return (
-      <Container className="loginContainer border border-info">
+      <div className="container loginContainer border border-info">
         <h2>Sign In</h2>
-        <Form className="form" onSubmit={this.onSubmit}>
-          <Col>
-            <FormGroup>
-              <Label>Username</Label>
-              <Input
+        <form className="form" onSubmit={this.onSubmit}>
+          <div className="col">
+            <div className="form-group">
+              <label>Username</label>
+              <input
+                className="form-control"
                 onChange={this.onChange}
                 type="text"
                 name="username"
                 id="username"
                 placeholder="username"
+                autoFocus
               />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label for="password">Password</Label>
-              <Input
+            </div>
+          </div>
+          <div className="col">
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                className="form-control"
                 onChange={this.onChange}
                 type="password"
                 name="password"
                 id="password"
                 placeholder="********"
               />
-            </FormGroup>
-          </Col>
-          <Button
+            </div>
+          </div>
+          <button
+            className="btn btn-primary"
             disabled={!this.validateForm() && !this.state.submitted}
             type="submit"
           >
             Submit
-          </Button>
-        </Form>
-      </Container>
+          </button>
+        </form>
+      </div>
     );
   }
 }

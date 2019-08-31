@@ -5,7 +5,7 @@
  */
 
 import React from "react";
-import {Button, ButtonGroup, Collapse, Container, Table} from "reactstrap";
+import { Button, ButtonGroup, Collapse, Container, Table } from "reactstrap";
 import DataForm from "./control_panel.data_form";
 import * as utils from "../utils";
 
@@ -94,9 +94,13 @@ class DataControl extends React.Component {
             <tbody>
               {this.props.data.map((entity, index) => (
                 <tr key={index}>
-                  {this.props.fields.map((field, index) => (
-                    <td key={index}>{entity[field.key]}</td>
-                  ))}
+                  {this.props.fields.map((field, index) =>
+                    !field.tableComponent ? (
+                      <td key={index}>{entity[field.key]}</td>
+                    ) : (
+                      <field.tableComponent entity={entity} />
+                    )
+                  )}
                   <td>
                     <ButtonGroup>
                       <Button

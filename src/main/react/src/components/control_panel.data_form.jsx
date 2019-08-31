@@ -4,7 +4,7 @@
  * @author user12043
  */
 import React from "react";
-import {Alert, Button, Container, Form, FormGroup, Input, Label} from "reactstrap";
+import { Alert, Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import * as utils from "../utils";
 
 class DataForm extends React.Component {
@@ -34,14 +34,9 @@ class DataForm extends React.Component {
     };
   }
 
+  // TODO make validate working
   validateForm() {
-    this.props.fields
-      .filter(field => !field.hideInput)
-      .forEach(field => {
-        if (!(this.state[field.key] && this.state[field.key].length)) {
-          return true;
-        }
-      });
+    return false;
   }
 
   handleInput(event) {
@@ -113,8 +108,8 @@ class DataForm extends React.Component {
             field =>
               !field.hideInput && (
                 <FormGroup key={field.key}>
-                  <Label for={field.key}>{field.name}: </Label>
-                  {!field.component ? (
+                  <Label htmlFor={field.key}>{field.name}: </Label>
+                  {!field.formComponent ? (
                     <Input
                       type={field.type}
                       id={field.key}
@@ -123,7 +118,7 @@ class DataForm extends React.Component {
                       onChange={this.handleInput}
                     />
                   ) : (
-                    field.component
+                    <field.formComponent />
                   )}
                 </FormGroup>
               )
