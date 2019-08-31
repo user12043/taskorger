@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import * as utils from "../utils";
 import { Badge, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from "reactstrap";
 
-function SelectedUser(props) {
+function SelectedBagde(props) {
   return (
     <Badge className="m-1 d-flex" color="secondary" pill>
-      <div className="m-1">{props.user.name}</div>
+      <div className="m-1">{props.entity[props.displayKey]}</div>
       <Badge
         tag="button"
         className="btn-danger"
-        onClick={() => props.onDelete(props.user)}
+        onClick={() => props.onDelete(props.entity)}
         color="danger"
         pill
       >
@@ -19,60 +19,71 @@ function SelectedUser(props) {
   );
 }
 
-class UserSelect extends Component {
+class MultiSelect extends Component {
   constructor(props) {
     super(props);
 
-    this.fetchUsers = this.fetchUsers.bind(this);
+    this.fetchData = this.fetchData.bind(this);
     this.addSelected = this.addSelected.bind(this);
     this.removeSelected = this.removeSelected.bind(this);
+    this.updateParent = this.updateParent.bind(this);
 
     this.state = {
-      users: [],
+      data: [],
       isOpen: false,
-      selectedUsers: []
+      selectedData: []
     };
   }
 
   componentDidMount() {
-    this.fetchUsers();
+    this.fetchData();
   }
 
-  fetchUsers() {
-    utils.apiReq("user", data => {
+  fetchData() {
+    utils.apiReq(this.props.api, data => {
       this.setState({
-        users: data["user"],
-        selectedUsers: []
+        data: data[this.props.apiAccess || this.props.api],
+        selectedData: []
       });
     });
   }
 
-  addSelected(user) {
-    let selectedUsers = [...this.state.selectedUsers, user];
-    // selectedUsers.push(user);
-    this.setState({ selectedUsers });
+  addSelected(entity) {
+    let selectedData = [...this.state.selectedData, entity];
+    this.setState({ selectedData });
+    this.updateParent(selectedData);
   }
 
-  removeSelected(user) {
-    let index = this.state.selectedUsers.findIndex(
-      ({ username }) => username === user.username
+  removeSelected(entity) {
+    let index = this.state.selectedData.findIndex(
+      selectedEntity =>
+        selectedEntity[this.props.uniqKey] === entity[this.props.uniqKey]
     );
     if (index !== -1) {
-      let selectedUsers = this.state.selectedUsers;
-      selectedUsers.splice(index, 1);
-      this.setState({ selectedUsers });
+      let selectedData = this.state.selectedData;
+      selectedData.splice(index, 1);
+      this.setState({ selectedData });
+      this.updateParent(selectedData);
+    }
+  }
+
+  updateParent(value) {
+    if (this.props.onChange) {
+      this.props.onChange(value);
     }
   }
 
   render() {
+    let { uniqKey } = this.props;
     return (
       <div className="form-group">
         <div className="form-control d-flex p-0 px-1">
-          {this.state.selectedUsers.map(user => (
-            <SelectedUser
-              key={user.username}
-              user={user}
+          {this.state.selectedData.map(entity => (
+            <SelectedBagde
+              key={entity[uniqKey]}
+              entity={entity}
               onDelete={this.removeSelected}
+              displayKey={this.props.displayKey}
             />
           ))}
           <UncontrolledDropdown className="w-100">
@@ -85,20 +96,21 @@ class UserSelect extends Component {
               />
             </DropdownToggle>
             <DropdownMenu>
-              {this.state.users
+              {this.state.data
                 .filter(
-                  user =>
-                    !this.state.selectedUsers.find(
-                      ({ username }) => username === user.username
+                  entity =>
+                    !this.state.selectedData.find(
+                      selectedEntity =>
+                        selectedEntity[uniqKey] === entity[uniqKey]
                     )
                 )
-                .map((user) => (
+                .map(entity => (
                   <DropdownItem
-                    key={user.username}
-                    value={user.username}
-                    onClick={() => this.addSelected(user)}
+                    key={entity[uniqKey]}
+                    value={entity[uniqKey]}
+                    onClick={() => this.addSelected(entity)}
                   >
-                    {user.name}
+                    {entity[this.props.displayKey]}
                   </DropdownItem>
                 ))}
             </DropdownMenu>
@@ -109,4 +121,4 @@ class UserSelect extends Component {
   }
 }
 
-export default UserSelect;
+export default MultiSelect;

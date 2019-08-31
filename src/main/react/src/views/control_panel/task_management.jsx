@@ -56,7 +56,20 @@ class TaskManagement extends React.Component {
             hideInput: true
           },
           { name: "Topic", key: "topic", type: "text" },
-          { name: "Assignees", key: "assignees", formComponent: MultiSelect }
+          {
+            name: "Assignees",
+            key: "assignees",
+            defaultValue: [],
+            formComponent: ({ onChange }) => (
+              <MultiSelect
+                onChange={selectedList => onChange("assignees", selectedList)}
+                api="user?projection=relatedUser"
+                apiAccess="user"
+                uniqKey="username"
+                displayKey="name"
+              />
+            )
+          }
         ]}
       />
     );

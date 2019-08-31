@@ -20,16 +20,17 @@ class DataForm extends React.Component {
 
     this.validateForm = this.validateForm.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleComponentInput = this.handleComponentInput.bind(this);
     this.save = this.save.bind(this);
 
     let fieldsObject = {};
     this.props.fields.forEach(field => {
-      fieldsObject[field.key] = field.defaultValue || "";
+      if (!field.formComponent) {
+        fieldsObject[field.key] = field.defaultValue || "";
+      }
     });
     this.state = {
-      ...{
-        error: null
-      },
+      error: null,
       ...fieldsObject
     };
   }
@@ -43,6 +44,12 @@ class DataForm extends React.Component {
     event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value
+    });
+  }
+
+  handleComponentInput(key, value) {
+    this.setState({
+      [key]: value
     });
   }
 
@@ -68,6 +75,7 @@ class DataForm extends React.Component {
     if (this.props.entity) {
       entity = this.props.entity;
       entity.id = utils.getIdFromSelfLink(this.props.entity);
+      entity.updateDate = new Date();
     } else {
       entity = {
         createDate: new Date()
@@ -118,7 +126,10 @@ class DataForm extends React.Component {
                       onChange={this.handleInput}
                     />
                   ) : (
-                    <field.formComponent />
+                    field.formComponent({
+                      entity: this.state.entity,
+                      onChange: this.handleComponentInput
+                    })
                   )}
                 </FormGroup>
               )
