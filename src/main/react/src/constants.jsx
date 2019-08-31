@@ -15,9 +15,12 @@ class constants {
     SETTINGS: "/settings",
     CONTROL_PANEL: "/control-panel",
     CONTROL_PANEL_SUB: {
-      USER_MAN: "/control-panel/user-man",
       ANNOUNCEMENT_MAN: "/control-panel/announcement-man",
-      TASK_MAN: "/control-panel/task-man"
+      COLUMN_MAN: "/control-panel/column-man",
+      TAG_MAN: "/control-panel/tag-man",
+      TASK_MAN: "/control-panel/task-man",
+      TOPIC_MAN: "/control-panel/topic-man",
+      USER_MAN: "/control-panel/user-man"
     },
     LOGIN: "/login"
   };

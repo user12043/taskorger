@@ -5,7 +5,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.awt.*;
 import java.util.Date;
 import java.util.Set;
 
@@ -25,7 +24,7 @@ public class Tag {
 
     private String name;
 
-    private Color color;
+    private String color;
 
     @NotNull
     private Date createDate;

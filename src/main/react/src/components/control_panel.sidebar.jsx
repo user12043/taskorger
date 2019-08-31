@@ -5,8 +5,8 @@
  */
 
 import React from "react";
-import {Collapse, Nav, Navbar, NavbarToggler, NavItem} from "reactstrap";
-import {NavLink} from "react-router-dom";
+import { Collapse, Nav, Navbar, NavbarToggler, NavItem } from "reactstrap";
+import { NavLink } from "react-router-dom";
 import constants from "../constants";
 import "../css/control-panel.css";
 
@@ -77,14 +77,6 @@ class ControlPanelSidebar extends React.Component {
           <Nav className="ml-auto" vertical navbar>
             <SideBarItem>
               <NavLink
-                to={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN}
-                className="nav-link"
-              >
-                User Management
-              </NavLink>
-            </SideBarItem>
-            <SideBarItem>
-              <NavLink
                 to={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN}
                 className="nav-link"
               >
@@ -93,10 +85,42 @@ class ControlPanelSidebar extends React.Component {
             </SideBarItem>
             <SideBarItem>
               <NavLink
+                to={constants.ROUTES.CONTROL_PANEL_SUB.COLUMN_MAN}
+                className="nav-link"
+              >
+                Column Management
+              </NavLink>
+            </SideBarItem>
+            <SideBarItem>
+              <NavLink
+                to={constants.ROUTES.CONTROL_PANEL_SUB.TAG_MAN}
+                className="nav-link"
+              >
+                Tag Management
+              </NavLink>
+            </SideBarItem>
+            <SideBarItem>
+              <NavLink
                 to={constants.ROUTES.CONTROL_PANEL_SUB.TASK_MAN}
                 className="nav-link"
               >
                 Task Management
+              </NavLink>
+            </SideBarItem>
+            <SideBarItem>
+              <NavLink
+                to={constants.ROUTES.CONTROL_PANEL_SUB.TOPIC_MAN}
+                className="nav-link"
+              >
+                Topic Management
+              </NavLink>
+            </SideBarItem>
+            <SideBarItem>
+              <NavLink
+                to={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN}
+                className="nav-link"
+              >
+                User Management
               </NavLink>
             </SideBarItem>
           </Nav>

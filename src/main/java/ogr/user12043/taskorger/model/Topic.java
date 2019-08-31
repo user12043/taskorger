@@ -6,7 +6,6 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.awt.*;
 import java.util.Date;
 import java.util.Set;
 
@@ -28,9 +27,9 @@ public class Topic {
     @Column(unique = true)
     private String name;
 
-    private Color foreground;
+    private String foreground;
 
-    private Color background;
+    private String background;
 
     @NotNull
     private Date createDate;

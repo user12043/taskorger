@@ -134,7 +134,7 @@ class DataForm extends React.Component {
                 </FormGroup>
               )
           )}
-          <Button color="success" disabled={this.validateForm()}>
+          <Button color="secondary" disabled={this.validateForm()}>
             Save
           </Button>
         </Form>
