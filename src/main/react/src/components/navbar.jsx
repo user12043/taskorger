@@ -73,7 +73,7 @@ class AppNavBar extends React.Component {
             {this.props.user.role === constants.ROLES.ADMIN && (
               <NavItem key={navItems.length}>
                 <NavLink
-                  to={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN}
+                  to={constants.ROUTES.CONTROL_PANEL}
                   className="nav-link"
                 >
                   Control Panel

@@ -6,7 +6,7 @@
 
 import React from "react";
 import "css/control-panel.css";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import constants from "util/constants";
 import { Container } from "reactstrap";
 import ControlPanelSidebar from "components/control_panel.sidebar";
@@ -47,6 +47,11 @@ class ControlPanel extends React.Component {
               path={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN}
               component={UserManagement}
             />
+            <Route>
+              <Redirect
+                to={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN}
+              />
+            </Route>
           </Switch>
         </Container>
       </div>
