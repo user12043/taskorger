@@ -5,8 +5,8 @@
  */
 
 import React from "react";
-import constants from "../constants";
-import "../css/login.css";
+import constants from "util/constants";
+import "css/login.css";
 import { withRouter } from "react-router-dom";
 
 class Login extends React.Component {

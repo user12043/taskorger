@@ -7,7 +7,7 @@
 import React from "react";
 import { Button, ButtonGroup, Collapse, Container, Table } from "reactstrap";
 import DataForm from "./control_panel.data_form";
-import * as utils from "../utils";
+import * as utils from "util/utils";
 
 class DataControl extends React.Component {
   static defaultProps = {

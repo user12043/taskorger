@@ -5,9 +5,9 @@
  */
 
 import React from "react";
-import * as util from "../../utils";
-import DataControl from "../../components/control_panel.data_control";
-import MultiSelect from "../../components/multi_select";
+import * as util from "util/utils";
+import DataControl from "components/control_panel.data_control";
+import MultiSelect from "components/multi_select";
 
 class TaskManagement extends React.Component {
   constructor(props) {

@@ -5,8 +5,8 @@
  */
 
 import React from "react";
-import * as utils from "../../utils";
-import DataControl from "../../components/control_panel.data_control";
+import * as utils from "util/utils";
+import DataControl from "components/control_panel.data_control";
 
 class UserManagement extends React.Component {
   constructor(props) {

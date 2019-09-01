@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import constants from "./constants";
-import {BrowserRouter} from "react-router-dom";
+import constants from "./util/constants";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <BrowserRouter basename={constants.APP_CONTEXT}>

@@ -5,8 +5,8 @@
  */
 
 import React from "react";
-import {NavLink} from "react-router-dom";
-import constants from "../constants";
+import { NavLink } from "react-router-dom";
+import constants from "util/constants";
 import {
   Collapse,
   DropdownItem,

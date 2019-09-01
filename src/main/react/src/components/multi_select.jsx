@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import * as utils from "../utils";
+import * as utils from "util/utils";
 import { Badge, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from "reactstrap";
 
 function SelectedBagde(props) {

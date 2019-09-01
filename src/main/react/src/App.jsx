@@ -1,8 +1,8 @@
 //modules
 import React from "react";
-import constants from "./constants";
-import { Route, Switch, withRouter } from "react-router-dom";
-import * as utils from "./utils";
+import constants from "./util/constants";
+import { Redirect, Route, Switch, withRouter } from "react-router-dom";
+import * as utils from "./util/utils";
 import "./css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AppNavBar from "./components/navbar";
@@ -99,10 +99,6 @@ class App extends React.Component {
           />
         );
       }
-
-      if (this.props.location.pathname === "/") {
-        this.props.history.push(constants.ROUTES.ANNOUNCEMENTS);
-      }
     } else {
       // not logged in
       // add login route and redirect
@@ -117,11 +113,11 @@ class App extends React.Component {
     }
     return (
       <div id="appContainer">
-        <Route>{elements}</Route>
+        {elements}
         <Switch>
           {routes}
           <Route>
-            <h1>Not found (404)</h1>
+            <Redirect to={constants.ROUTES.ANNOUNCEMENTS} />
           </Route>
         </Switch>
       </div>

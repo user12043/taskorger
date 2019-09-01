@@ -5,11 +5,11 @@
  */
 
 import React from "react";
-import "../../css/control-panel.css";
+import "css/control-panel.css";
 import { Route, Switch } from "react-router-dom";
-import constants from "../../constants";
+import constants from "util/constants";
 import { Container } from "reactstrap";
-import ControlPanelSidebar from "../../components/control_panel.sidebar";
+import ControlPanelSidebar from "components/control_panel.sidebar";
 import AnnouncementManagement from "./announcement_management";
 import TaskManagement from "./task_management";
 import TopicManagement from "./topic_management";

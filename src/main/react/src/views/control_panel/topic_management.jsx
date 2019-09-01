@@ -5,8 +5,8 @@
  */
 
 import React from "react";
-import DataControl from "../../components/control_panel.data_control";
-import * as utils from "../../utils";
+import DataControl from "components/control_panel.data_control";
+import * as utils from "util/utils";
 
 class TopicManagement extends React.Component {
   constructor(props) {

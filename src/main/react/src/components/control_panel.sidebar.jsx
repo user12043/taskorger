@@ -7,8 +7,8 @@
 import React from "react";
 import { Collapse, Nav, Navbar, NavbarToggler, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
-import constants from "../constants";
-import "../css/control-panel.css";
+import constants from "util/constants";
+import "css/control-panel.css";
 
 class SideBarItem extends React.Component {
   constructor(props) {
