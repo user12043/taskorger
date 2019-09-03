@@ -3,7 +3,10 @@ package ogr.user12043.taskorger.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
@@ -18,10 +21,6 @@ import java.util.Set;
 @Entity
 @Table(name = "t_column")
 public class Column extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @NotNull
     private String name;
 

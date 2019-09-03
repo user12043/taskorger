@@ -3,7 +3,8 @@ package ogr.user12043.taskorger.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -17,10 +18,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "t_announcement")
 public class Announcement extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @NotNull
     private String content;
 }

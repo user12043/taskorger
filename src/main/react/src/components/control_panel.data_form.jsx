@@ -73,12 +73,6 @@ class DataForm extends React.Component {
     let entity = {};
     if (this.props.entity) {
       entity = this.props.entity;
-      // entity.id = utils.getIdFromSelfLink(this.props.entity);
-      // entity.updateDate = new Date();
-    } else {
-      entity = {
-        // createDate: new Date()
-      };
     }
 
     let that = this;

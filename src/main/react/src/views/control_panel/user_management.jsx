@@ -37,13 +37,19 @@ class UserManagement extends React.Component {
         fields={[
           { name: "Name", key: "name", type: "text" },
           { name: "Username", key: "username", type: "text" },
-          { name: "Password", key: "password", type: "password" },
+          {
+            name: "Password",
+            key: "password",
+            type: "text",
+            hideColumn: true
+          },
           { name: "Role", key: "role", type: "number", defaultValue: "0" },
           {
             name: "Create date",
             key: "createDate",
             type: "date",
-            hideInput: true
+            hideInput: true,
+            tableComponent: ({ value }) => <div key={value}>{value}</div>
           },
           {
             name: "Update date",

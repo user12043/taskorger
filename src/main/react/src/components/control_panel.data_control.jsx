@@ -56,7 +56,7 @@ class DataControl extends React.Component {
       {
         method: "delete"
       },
-      response => console.log(response.message)
+      response => alert(response.message)
     );
   }
 
@@ -85,22 +85,31 @@ class DataControl extends React.Component {
           <Table className="text-light table-bordered table-responsive-sm">
             <thead>
               <tr>
-                {this.props.fields.map((field, index) => (
-                  <th key={index}>{field.name}</th>
-                ))}
+                {this.props.fields.map(field =>
+                  !field.hideColumn ? (
+                    <th key={field.key}>{field.name}</th>
+                  ) : null
+                )}
                 <th>Options</th>
               </tr>
             </thead>
             <tbody>
               {this.props.data.map((entity, index) => (
-                <tr key={index}>
-                  {this.props.fields.map((field, index) => {
-                    return !field.tableComponent ? (
-                      <td key={index}>{entity[field.key]}</td>
-                    ) : (
-                      <field.tableComponent entity={entity} />
-                    );
-                  })}
+                <tr key={entity.id || index}>
+                  {this.props.fields.map(field =>
+                    !field.hideColumn ? (
+                      !field.tableComponent ? (
+                        <td key={field.key}>{entity[field.key]}</td>
+                      ) : (
+                        <td key={field.key}>
+                          {field.tableComponent({
+                            entity,
+                            value: entity[field.key]
+                          })}
+                        </td>
+                      )
+                    ) : null
+                  )}
                   <td>
                     <ButtonGroup>
                       <Button
