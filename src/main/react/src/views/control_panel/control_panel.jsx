@@ -11,6 +11,8 @@ import constants from "util/constants";
 import { Container } from "reactstrap";
 import ControlPanelSidebar from "components/control_panel.sidebar";
 import AnnouncementManagement from "./announcement_management";
+import ColumnManagement from "./column_management";
+import TagManagement from "./tag_management";
 import TaskManagement from "./task_management";
 import TopicManagement from "./topic_management";
 import UserManagement from "./user_management";
@@ -29,11 +31,11 @@ class ControlPanel extends React.Component {
             />
             <Route
               path={constants.ROUTES.CONTROL_PANEL_SUB.COLUMN_MAN}
-              component={"ColumnManagement"}
+              component={ColumnManagement}
             />
             <Route
               path={constants.ROUTES.CONTROL_PANEL_SUB.TAG_MAN}
-              component={"TagManagement"}
+              component={TagManagement}
             />
             <Route
               path={constants.ROUTES.CONTROL_PANEL_SUB.TASK_MAN}

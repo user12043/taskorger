@@ -40,13 +40,13 @@ class TopicManagement extends React.Component {
             name: "Foreground Color",
             key: "foreground",
             type: "color",
-            defaultValue: "#000000"
+            defaultValue: "#0"
           },
           {
             name: "Background Color",
             key: "background",
             type: "color",
-            defaultValue: "#000000"
+            defaultValue: "#0"
           }
         ]}
         data={this.state.topics}

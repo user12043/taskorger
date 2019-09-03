@@ -3,12 +3,12 @@ package ogr.user12043.taskorger.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -17,10 +17,11 @@ import java.util.Set;
  *
  * @author user12043
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "t_user")
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,12 +39,6 @@ public class User {
     private String password;
 
     private Byte role;
-
-    @NotNull
-    private Date createDate;
-
-    @NotNull
-    private Date updateDate = new Date();
 
     @ManyToMany(mappedBy = "assignees")
     @JsonIgnore

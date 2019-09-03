@@ -1,6 +1,7 @@
 package ogr.user12043.taskorger.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,10 +14,11 @@ import java.util.Set;
  *
  * @author user12043
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "t_task")
-public class Task {
+public class Task extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,12 +33,6 @@ public class Task {
     private Date deadline;
 
     private Byte status;    // 0, 1, 2 - ONGOING, COMPLETED, CANCELLED
-
-    @NotNull
-    private Date createDate;
-
-    @NotNull
-    private Date updateDate = new Date();
 
     @ManyToOne
     private Topic topic;

@@ -33,6 +33,7 @@ class DataForm extends React.Component {
       error: null,
       ...fieldsObject
     };
+    this.initialState = this.state;
   }
 
   // TODO make validate working
@@ -56,9 +57,7 @@ class DataForm extends React.Component {
   componentWillReceiveProps(nextProps, nextContext) {
     let newState = {};
     if (!nextProps.entity) {
-      nextProps.fields.forEach(field => {
-        newState[field.key] = field.defaultValue || "";
-      });
+      newState = this.initialState;
     } else {
       nextProps.fields.forEach(field => {
         if (nextProps.entity[field.key]) {
@@ -74,11 +73,11 @@ class DataForm extends React.Component {
     let entity = {};
     if (this.props.entity) {
       entity = this.props.entity;
-      entity.id = utils.getIdFromSelfLink(this.props.entity);
-      entity.updateDate = new Date();
+      // entity.id = utils.getIdFromSelfLink(this.props.entity);
+      // entity.updateDate = new Date();
     } else {
       entity = {
-        createDate: new Date()
+        // createDate: new Date()
       };
     }
 
@@ -124,6 +123,7 @@ class DataForm extends React.Component {
                       name={field.key}
                       value={this.state[field.key]}
                       onChange={this.handleInput}
+                      autoComplete="off"
                     />
                   ) : (
                     field.formComponent({

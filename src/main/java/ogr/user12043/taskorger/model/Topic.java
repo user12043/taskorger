@@ -2,11 +2,11 @@ package ogr.user12043.taskorger.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -15,10 +15,11 @@ import java.util.Set;
  *
  * @author user12043
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "t_topic")
-public class Topic {
+public class Topic extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,12 +31,6 @@ public class Topic {
     private String foreground;
 
     private String background;
-
-    @NotNull
-    private Date createDate;
-
-    @NotNull
-    private Date updateDate = new Date();
 
     @OneToMany(mappedBy = "topic")
     @JsonIgnore

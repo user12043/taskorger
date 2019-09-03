@@ -94,13 +94,13 @@ class DataControl extends React.Component {
             <tbody>
               {this.props.data.map((entity, index) => (
                 <tr key={index}>
-                  {this.props.fields.map((field, index) =>
-                    !field.tableComponent ? (
+                  {this.props.fields.map((field, index) => {
+                    return !field.tableComponent ? (
                       <td key={index}>{entity[field.key]}</td>
                     ) : (
                       <field.tableComponent entity={entity} />
-                    )
-                  )}
+                    );
+                  })}
                   <td>
                     <ButtonGroup>
                       <Button

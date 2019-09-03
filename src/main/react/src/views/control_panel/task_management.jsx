@@ -69,6 +69,16 @@ class TaskManagement extends React.Component {
                 displayKey="name"
               />
             )
+          },
+          {
+            name: "Column",
+            key: "column",
+            defaultValue: {}
+          },
+          {
+            name: "Tag",
+            key: "tags",
+            defaultValue: []
           }
         ]}
       />

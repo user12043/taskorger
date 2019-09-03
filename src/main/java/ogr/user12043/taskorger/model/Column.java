@@ -1,10 +1,10 @@
 package ogr.user12043.taskorger.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -13,10 +13,11 @@ import java.util.Set;
  *
  * @author user12043
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "t_column")
-public class Column {
+public class Column extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,12 +29,6 @@ public class Column {
 
     @NotNull
     private Integer columnLimit;
-
-    @NotNull
-    private Date createDate;
-
-    @NotNull
-    private Date updateDate = new Date();
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "column", orphanRemoval = true)
     private Set<Task> tasks;
