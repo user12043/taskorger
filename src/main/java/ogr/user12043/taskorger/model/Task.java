@@ -45,7 +45,7 @@ public class Task {
     private Set<User> assignees;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(targetEntity = Column.class)
     private Column column;
 
     @ManyToMany(mappedBy = "tasks")

@@ -21,7 +21,7 @@ class ColumnManagement extends React.Component {
   fetchColumns() {
     utils.apiReq("column", data => {
       this.setState({
-        colums: data["column"]
+        columns: data["column"]
       });
     });
   }
