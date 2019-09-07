@@ -1,8 +1,45 @@
 {
-  "extends": [
-    "react-app"
-  ],
-  "plugins": [
-    "react"
-  ]
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "airbnb",
+        "react",
+        "react-app",
+        "standard",
+        "prettier",
+        "prettier/standard",
+        "prettier/react"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": ["react", "react-app", "prettier", "jsx-a11y", "import"],
+    "rules": {
+        "react/prop-types": "error",
+        "prettier/prettier": "error",
+        "react/jsx-filename-extension": [
+            "error",
+            {
+                "extensions": [".jsx", ".js"]
+            }
+        ],
+        "no-unused-vars": "error"
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "moduleDirectory": ["node_modules", "src"]
+            }
+        }
+    }
 }

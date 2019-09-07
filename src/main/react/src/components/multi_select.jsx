@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import * as utils from "util/utils";
+import PropTypes from "prop-types";
 import { Badge, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from "reactstrap";
 
-function SelectedBagde(props) {
+function SelectedBadge({ entity, onDelete }) {
   return (
     <Badge className="m-1 d-flex" color="secondary" pill>
-      <div className="m-1">{props.entity[props.displayKey]}</div>
+      <div className="m-1">{entity.displayKey}</div>
       <Badge
         tag="button"
         className="btn-danger"
-        onClick={() => props.onDelete(props.entity)}
+        onClick={() => onDelete(entity)}
         color="danger"
         pill
       >
@@ -18,6 +19,12 @@ function SelectedBagde(props) {
     </Badge>
   );
 }
+
+SelectedBadge.propTypes = {
+  entity: PropTypes.object.isRequired,
+  displayKey: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired
+};
 
 class MultiSelect extends Component {
   constructor(props) {
@@ -30,7 +37,6 @@ class MultiSelect extends Component {
 
     this.state = {
       data: [],
-      isOpen: false,
       selectedData: []
     };
   }
@@ -40,27 +46,29 @@ class MultiSelect extends Component {
   }
 
   fetchData() {
-    utils.apiReq(this.props.api, data => {
+    const { props } = this;
+    utils.apiReq(props.api, data => {
       this.setState({
-        data: data[this.props.apiAccess || this.props.api],
+        data: data[props.apiAccess || props.api],
         selectedData: []
       });
     });
   }
 
   addSelected(entity) {
-    let selectedData = [...this.state.selectedData, entity];
+    const { state } = this;
+    const selectedData = [...state.selectedData, entity];
     this.setState({ selectedData });
     this.updateParent(selectedData);
   }
 
   removeSelected(entity) {
-    let index = this.state.selectedData.findIndex(
-      selectedEntity =>
-        selectedEntity[this.props.uniqKey] === entity[this.props.uniqKey]
+    const { state, props } = this;
+    const index = state.selectedData.findIndex(
+      selectedEntity => selectedEntity[props.uniqKey] === entity[props.uniqKey]
     );
     if (index !== -1) {
-      let selectedData = this.state.selectedData;
+      const { selectedData } = this.state;
       selectedData.splice(index, 1);
       this.setState({ selectedData });
       this.updateParent(selectedData);
@@ -68,22 +76,24 @@ class MultiSelect extends Component {
   }
 
   updateParent(value) {
-    if (this.props.onChange) {
-      this.props.onChange(value);
+    const { props } = this;
+    if (props.onChange) {
+      props.onChange(value);
     }
   }
 
   render() {
-    let { uniqKey } = this.props;
+    const { state } = this;
+    const { uniqKey, displayKey } = this.props;
     return (
       <div className="form-group">
         <div className="form-control d-flex p-0 px-1">
-          {this.state.selectedData.map(entity => (
-            <SelectedBagde
+          {state.selectedData.map(entity => (
+            <SelectedBadge
               key={entity[uniqKey]}
               entity={entity}
               onDelete={this.removeSelected}
-              displayKey={this.props.displayKey}
+              displayKey={displayKey}
             />
           ))}
           <UncontrolledDropdown className="w-100">
@@ -96,10 +106,10 @@ class MultiSelect extends Component {
               />
             </DropdownToggle>
             <DropdownMenu>
-              {this.state.data
+              {state.data
                 .filter(
                   entity =>
-                    !this.state.selectedData.find(
+                    !state.selectedData.find(
                       selectedEntity =>
                         selectedEntity[uniqKey] === entity[uniqKey]
                     )
@@ -110,7 +120,7 @@ class MultiSelect extends Component {
                     value={entity[uniqKey]}
                     onClick={() => this.addSelected(entity)}
                   >
-                    {entity[this.props.displayKey]}
+                    {entity[displayKey]}
                   </DropdownItem>
                 ))}
             </DropdownMenu>
@@ -120,5 +130,13 @@ class MultiSelect extends Component {
     );
   }
 }
+
+MultiSelect.propTypes = {
+  api: PropTypes.string.isRequired,
+  apiAccess: PropTypes.string.isRequired,
+  uniqKey: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  displayKey: PropTypes.string.isRequired
+};
 
 export default MultiSelect;

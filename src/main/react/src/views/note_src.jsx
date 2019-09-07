@@ -6,6 +6,7 @@
 
 import React from "react";
 
+// eslint-disable-next-line react/prefer-stateless-function
 class NoteSrc extends React.Component {
   render() {
     return <h1>This is note-sources page</h1>;

@@ -13,29 +13,47 @@ class TaskManagement extends React.Component {
   constructor(props) {
     super(props);
 
-    this.fetchTasks = this.fetchTasks.bind(this);
+    this.fetchData = this.fetchData.bind(this);
     this.state = {
-      tasks: []
+      tasks: [],
+      topics: [],
+      columns: []
     };
   }
 
-  fetchTasks() {
-    util.apiReq("task", data => {
-      this.setState({
-        tasks: data["task"]
-      });
+  componentWillMount() {
+    this.fetchData();
+  }
+
+  async fetchData() {
+    let tasks = [];
+    let topics = [];
+    let columns = [];
+    await util.apiReq("task", data => {
+      tasks = data.task;
+    });
+
+    await util.apiReq("topic", data => {
+      topics = data.topic;
+    });
+
+    await util.apiReq("column", data => {
+      columns = data.column;
+    });
+
+    this.setState({
+      tasks,
+      topics,
+      columns
     });
   }
 
-  componentWillMount() {
-    this.fetchTasks();
-  }
-
   render() {
+    const { tasks, topics, columns } = this.state;
     return (
       <DataControl
         api="task"
-        data={this.state.tasks}
+        data={tasks}
         header="Task Management"
         fields={[
           { name: "Header", key: "header", type: "text" },
@@ -55,7 +73,22 @@ class TaskManagement extends React.Component {
             type: "date",
             hideInput: true
           },
-          { name: "Topic", key: "topic", type: "text" },
+          {
+            name: "Topic",
+            key: "topic",
+            formComponent: ({ entity, onChange }) => (
+              <select
+                id="topic"
+                name="topic"
+                value={entity.topic.id}
+                onChange={value => onChange(value)}
+              >
+                {topics.map(({ id, name }) => (
+                  <option value={id}>{name}</option>
+                ))}
+              </select>
+            )
+          },
           {
             name: "Assignees",
             key: "assignees",
@@ -65,7 +98,7 @@ class TaskManagement extends React.Component {
                 onChange={selectedList => onChange("assignees", selectedList)}
                 api="user?projection=relatedUser"
                 apiAccess="user"
-                uniqKey="username"
+                uniqKey="id"
                 displayKey="name"
               />
             )
@@ -73,7 +106,14 @@ class TaskManagement extends React.Component {
           {
             name: "Column",
             key: "column",
-            defaultValue: {}
+            defaultValue: {},
+            formComponent: ({ entity }) => (
+              <select id="column" name="column" value={entity.column.id}>
+                {columns.map(({ id, name }) => (
+                  <option value={id}>{name}</option>
+                ))}
+              </select>
+            )
           },
           {
             name: "Tag",

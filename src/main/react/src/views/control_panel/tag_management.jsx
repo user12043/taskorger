@@ -18,19 +18,20 @@ export default class TagManagement extends React.Component {
     this.fetchTags = this.fetchTags.bind(this);
   }
 
-  fetchTags() {
-    utils.apiReq("tag", data => {
-      this.setState({
-        tags: data["tag"]
-      });
-    });
-  }
-
   componentWillMount() {
     this.fetchTags();
   }
 
+  fetchTags() {
+    utils.apiReq("tag", data => {
+      this.setState({
+        tags: data.tag
+      });
+    });
+  }
+
   render() {
+    const { tags } = this.state;
     return (
       <DataControl
         api="tag"
@@ -50,7 +51,7 @@ export default class TagManagement extends React.Component {
             hideInput: true
           }
         ]}
-        data={this.state.tags}
+        data={tags}
         header="Tag Management"
         onSave={this.fetchTags}
       />

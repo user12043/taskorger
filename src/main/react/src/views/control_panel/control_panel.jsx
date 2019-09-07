@@ -17,48 +17,45 @@ import TaskManagement from "./task_management";
 import TopicManagement from "./topic_management";
 import UserManagement from "./user_management";
 
-class ControlPanel extends React.Component {
-  render() {
-    return (
-      <div id="control-panel">
-        <ControlPanelSidebar />
-
-        <Container className="control-content">
-          <Switch>
-            <Route
-              path={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN}
-              component={AnnouncementManagement}
+const ControlPanel = () => {
+  return (
+    <div id="control-panel">
+      <ControlPanelSidebar />
+      <Container className="control-content">
+        <Switch>
+          <Route
+            path={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN}
+            component={AnnouncementManagement}
+          />
+          <Route
+            path={constants.ROUTES.CONTROL_PANEL_SUB.COLUMN_MAN}
+            component={ColumnManagement}
+          />
+          <Route
+            path={constants.ROUTES.CONTROL_PANEL_SUB.TAG_MAN}
+            component={TagManagement}
+          />
+          <Route
+            path={constants.ROUTES.CONTROL_PANEL_SUB.TASK_MAN}
+            component={TaskManagement}
+          />
+          <Route
+            path={constants.ROUTES.CONTROL_PANEL_SUB.TOPIC_MAN}
+            component={TopicManagement}
+          />
+          <Route
+            path={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN}
+            component={UserManagement}
+          />
+          <Route>
+            <Redirect
+              to={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN}
             />
-            <Route
-              path={constants.ROUTES.CONTROL_PANEL_SUB.COLUMN_MAN}
-              component={ColumnManagement}
-            />
-            <Route
-              path={constants.ROUTES.CONTROL_PANEL_SUB.TAG_MAN}
-              component={TagManagement}
-            />
-            <Route
-              path={constants.ROUTES.CONTROL_PANEL_SUB.TASK_MAN}
-              component={TaskManagement}
-            />
-            <Route
-              path={constants.ROUTES.CONTROL_PANEL_SUB.TOPIC_MAN}
-              component={TopicManagement}
-            />
-            <Route
-              path={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN}
-              component={UserManagement}
-            />
-            <Route>
-              <Redirect
-                to={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN}
-              />
-            </Route>
-          </Switch>
-        </Container>
-      </div>
-    );
-  }
-}
+          </Route>
+        </Switch>
+      </Container>
+    </div>
+  );
+};
 
 export default ControlPanel;

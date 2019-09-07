@@ -7,6 +7,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import constants from "util/constants";
+import PropTypes from "prop-types";
 import {
   Collapse,
   DropdownItem,
@@ -26,19 +27,18 @@ class AppNavBar extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false,
-      user: JSON.parse(localStorage.getItem(constants.LOGGED_USER))
+      isOpen: false
     };
   }
 
   toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+    this.setState(prevState => ({
+      isOpen: !prevState.isOpen
+    }));
   }
 
   render() {
-    let navItems = [
+    const navItems = [
       <NavItem key="0">
         <NavLink to={constants.ROUTES.ANNOUNCEMENTS} className="nav-link">
           Announcements
@@ -61,16 +61,18 @@ class AppNavBar extends React.Component {
       </NavItem>
     ];
 
+    const { isOpen } = this.state;
+    const { user, onLogout } = this.props;
     return (
       <Navbar color="dark" dark expand="md" fixed="top">
         <NavbarBrand color="light" href="/" style={{ fontSize: "1.7em" }}>
           Taskorger
         </NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
-        <Collapse isOpen={this.state.isOpen} navbar>
+        <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
             {navItems}
-            {this.props.user.role === constants.ROLES.ADMIN && (
+            {user.role === constants.ROLES.ADMIN && (
               <NavItem key={navItems.length}>
                 <NavLink
                   to={constants.ROUTES.CONTROL_PANEL}
@@ -82,15 +84,13 @@ class AppNavBar extends React.Component {
             )}
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                {this.state.user.username} ({this.state.user.name})
+                {user.username} ({user.name})
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>Profile</DropdownItem>
                 <DropdownItem>Messages</DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem onClick={this.props.onLogout}>
-                  Logout
-                </DropdownItem>
+                <DropdownItem onClick={onLogout}>Logout</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
@@ -99,5 +99,17 @@ class AppNavBar extends React.Component {
     );
   }
 }
+
+AppNavBar.propTypes = {
+  user: PropTypes.object,
+  onLogout: PropTypes.func
+};
+
+AppNavBar.defaultProps = {
+  user: JSON.parse(localStorage.getItem(constants.LOGGED_USER)),
+  onLogout: () => {
+    console.log("logout");
+  }
+};
 
 export default AppNavBar;

@@ -18,19 +18,20 @@ class ColumnManagement extends React.Component {
     this.fetchColumns = this.fetchColumns.bind(this);
   }
 
-  fetchColumns() {
-    utils.apiReq("column", data => {
-      this.setState({
-        columns: data["column"]
-      });
-    });
-  }
-
   componentWillMount() {
     this.fetchColumns();
   }
 
+  fetchColumns() {
+    utils.apiReq("column", data => {
+      this.setState({
+        columns: data.column
+      });
+    });
+  }
+
   render() {
+    const { columns } = this.state;
     return (
       <DataControl
         api="column"
@@ -56,7 +57,7 @@ class ColumnManagement extends React.Component {
             hideInput: true
           }
         ]}
-        data={this.state.columns}
+        data={columns}
         header="Column Management"
         onSave={this.fetchColumns}
       />

@@ -32,23 +32,23 @@ export function apiReq(path, callback, options, error, notEmbedded) {
       }
     })
     .then(data => {
-      callback(notEmbedded ? data : data["_embedded"]);
+      callback(notEmbedded ? data : data._embedded);
     })
     .catch(response => {
       if (error) {
         error(response);
       } else {
-        alert("fetching failed!: " + response.message);
+        // alert("fetching failed!: " + response.message);
       }
     });
 }
 
 export function getSelfLink(entityObject) {
-  let url = entityObject["_links"]["self"]["href"];
+  const url = entityObject._links.self.href;
   return url.substr(url.lastIndexOf("api/") + 4);
 }
 
 export function getIdFromSelfLink(entityObject) {
-  let selfLink = getSelfLink(entityObject);
+  const selfLink = getSelfLink(entityObject);
   return +selfLink.substr(selfLink.lastIndexOf("/") + 1);
 }

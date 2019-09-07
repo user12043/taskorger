@@ -18,19 +18,20 @@ class UserManagement extends React.Component {
     this.fetchUsers = this.fetchUsers.bind(this);
   }
 
-  fetchUsers() {
-    utils.apiReq("user", data => {
-      this.setState({
-        users: data["user"]
-      });
-    });
-  }
-
   componentWillMount() {
     this.fetchUsers();
   }
 
+  fetchUsers() {
+    utils.apiReq("user", data => {
+      this.setState({
+        users: data.user
+      });
+    });
+  }
+
   render() {
+    const { users } = this.state;
     return (
       <DataControl
         api="user"
@@ -58,7 +59,7 @@ class UserManagement extends React.Component {
             hideInput: true
           }
         ]}
-        data={this.state.users}
+        data={users}
         header="User Management"
         onSave={this.fetchUsers}
       />

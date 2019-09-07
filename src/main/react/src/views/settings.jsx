@@ -6,6 +6,7 @@
 
 import React from "react";
 
+// eslint-disable-next-line react/prefer-stateless-function
 class Settings extends React.Component {
   render() {
     return <h1>This is settings page</h1>;

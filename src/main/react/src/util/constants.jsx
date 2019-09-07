@@ -7,7 +7,7 @@
 class constants {
   static APP_CONTEXT = "/taskorger";
   static ROOT_ELEMENT_ID = "root";
-  static API_ROOT = this.APP_CONTEXT + "/api/";
+  static API_ROOT = `${this.APP_CONTEXT}/api/`;
   static ROUTES = {
     ANNOUNCEMENTS: "/announcements",
     TASKS: "/tasks",
@@ -24,6 +24,7 @@ class constants {
     },
     LOGIN: "/login"
   };
+
   static LOGGED_USER = "loggedUser";
   static USER_ADMIN = "userAdmin";
   static ROLES = {

@@ -6,17 +6,11 @@
 
 import React from "react";
 import { Button, ButtonGroup, Collapse, Container, Table } from "reactstrap";
-import DataForm from "./control_panel.data_form";
 import * as utils from "util/utils";
+import PropTypes from "prop-types";
+import DataForm from "./control_panel.data_form";
 
 class DataControl extends React.Component {
-  static defaultProps = {
-    fields: [],
-    data: null,
-    entity: null,
-    header: null
-  };
-
   constructor(props) {
     super(props);
 
@@ -38,11 +32,12 @@ class DataControl extends React.Component {
   }
 
   onSave() {
+    const { onSave } = this.props;
     this.setState({
       formOpen: false,
       editingEntity: null
     });
-    this.props.onSave && this.props.onSave();
+    onSave();
   }
 
   editEntity(entity) {
@@ -50,42 +45,44 @@ class DataControl extends React.Component {
   }
 
   deleteEntity(entity) {
+    const { onSave } = this.props;
     utils.apiReq(
       utils.getSelfLink(entity),
-      () => this.props.onSave && this.props.onSave(),
+      () => onSave(),
       {
         method: "delete"
-      },
-      response => alert(response.message)
+      }
+      // , response => alert(response.message)
     );
   }
 
   render() {
+    const { state, props } = this;
     return (
       <Container className="border border-info bg-dark text-light pt-2 ml-5 ml-md-0">
-        <h3>{this.props.header}</h3>
+        <h3>{props.header}</h3>
         <Button
           className="add-button"
-          color={this.state.formOpen ? "danger" : "primary"}
+          color={state.formOpen ? "danger" : "primary"}
           onClick={this.toggleForm}
           outline
         >
-          {this.state.formOpen ? "Cancel" : "Add"}
+          {state.formOpen ? "Cancel" : "Add"}
         </Button>
-        <Collapse isOpen={this.state.formOpen} className="mt-2">
+        <Collapse isOpen={state.formOpen} className="mt-2">
           <DataForm
             onSave={this.onSave}
-            fields={this.props.fields}
-            entity={this.state.editingEntity}
-            api={this.props.api}
+            fields={props.fields}
+            entity={state.editingEntity}
+            api={props.api}
           />
         </Collapse>
         <hr />
-        {this.props.data && this.props.data.length ? (
+        {props.data && props.data.length ? (
           <Table className="text-light table-bordered table-responsive-sm">
             <thead>
               <tr>
-                {this.props.fields.map(field =>
+                {props.fields.map(field =>
                   !field.hideColumn ? (
                     <th key={field.key}>{field.name}</th>
                   ) : null
@@ -94,11 +91,12 @@ class DataControl extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.data.map((entity, index) => (
+              {props.data.map((entity, index) => (
                 <tr key={entity.id || index}>
-                  {this.props.fields.map(field =>
-                    !field.hideColumn ? (
-                      !field.tableComponent ? (
+                  {props.fields.map(
+                    field =>
+                      !field.hideColumn &&
+                      (!field.tableComponent ? (
                         <td key={field.key}>{entity[field.key]}</td>
                       ) : (
                         <td key={field.key}>
@@ -107,8 +105,7 @@ class DataControl extends React.Component {
                             value: entity[field.key]
                           })}
                         </td>
-                      )
-                    ) : null
+                      ))
                   )}
                   <td>
                     <ButtonGroup>
@@ -139,5 +136,19 @@ class DataControl extends React.Component {
     );
   }
 }
+
+DataControl.propTypes = {
+  header: PropTypes.string,
+  onSave: PropTypes.func,
+  fields: PropTypes.array.isRequired,
+  api: PropTypes.string.isRequired,
+  data: PropTypes.array
+};
+
+DataControl.defaultProps = {
+  data: [],
+  header: null,
+  onSave: () => null
+};
 
 export default DataControl;

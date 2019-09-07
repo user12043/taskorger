@@ -18,19 +18,20 @@ class AnnouncementManagement extends React.Component {
     };
   }
 
-  fetchAnnouncements() {
-    utils.apiReq("announcement", data => {
-      this.setState({
-        announcements: data["announcement"]
-      });
-    });
-  }
-
   componentWillMount() {
     this.fetchAnnouncements();
   }
 
+  fetchAnnouncements() {
+    utils.apiReq("announcement", data => {
+      this.setState({
+        announcements: data.announcement
+      });
+    });
+  }
+
   render() {
+    const { announcements } = this.state;
     return (
       <DataControl
         api="announcement"
@@ -49,7 +50,7 @@ class AnnouncementManagement extends React.Component {
             hideInput: true
           }
         ]}
-        data={this.state.announcements}
+        data={announcements}
         header="Announcement Management"
         onSave={this.fetchAnnouncements}
       />

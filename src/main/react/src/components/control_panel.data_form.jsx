@@ -4,17 +4,11 @@
  * @author user12043
  */
 import React from "react";
+import PropTypes from "prop-types";
 import { Alert, Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import * as utils from "util/utils";
 
 class DataForm extends React.Component {
-  static defaultProps = {
-    fields: [],
-    onSave: null,
-    api: "",
-    entity: null
-  };
-
   constructor(props) {
     super(props);
 
@@ -23,8 +17,8 @@ class DataForm extends React.Component {
     this.handleComponentInput = this.handleComponentInput.bind(this);
     this.save = this.save.bind(this);
 
-    let fieldsObject = {};
-    this.props.fields.forEach(field => {
+    const fieldsObject = {};
+    props.fields.forEach(field => {
       if (!field.formComponent) {
         fieldsObject[field.key] = field.defaultValue || "";
       }
@@ -34,24 +28,6 @@ class DataForm extends React.Component {
       ...fieldsObject
     };
     this.initialState = this.state;
-  }
-
-  // TODO make validate working
-  validateForm() {
-    return false;
-  }
-
-  handleInput(event) {
-    event.preventDefault();
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-
-  handleComponentInput(key, value) {
-    this.setState({
-      [key]: value
-    });
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -68,24 +44,42 @@ class DataForm extends React.Component {
     this.setState(newState);
   }
 
+  handleInput(event) {
+    event.preventDefault();
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  handleComponentInput(key, value) {
+    this.setState({
+      [key]: value
+    });
+  }
+
+  // TODO make validate working
+  static validateForm() {
+    return false;
+  }
+
   save(event) {
     event.preventDefault();
+    const { props, state } = this;
     let entity = {};
-    if (this.props.entity) {
-      entity = this.props.entity;
+    if (props.entity) {
+      entity = props.entity;
     }
 
-    let that = this;
-    this.props.fields.forEach(field => {
+    props.fields.forEach(field => {
       if (!field.hideInput) {
-        entity[field.key] = that.state[field.key];
+        entity[field.key] = state[field.key];
       }
     });
     utils.apiReq(
-      this.props.api,
+      props.api,
       () => {
-        if (this.props.onSave) {
-          this.props.onSave();
+        if (props.onSave) {
+          props.onSave();
         }
       },
       {
@@ -93,19 +87,20 @@ class DataForm extends React.Component {
         body: JSON.stringify(entity)
       },
       response =>
-        this.setState({ error: "Saving failed! : " + response.message })
+        this.setState({ error: `Saving failed! : ${response.message}` })
     );
   }
 
   render() {
+    const { props, state } = this;
     return (
       <Container>
-        {this.state.error && <Alert color="danger">{this.state.error}</Alert>}
+        {state.error && <Alert color="danger">{state.error}</Alert>}
         <Form
           className="border border-secondary data-form"
           onSubmit={this.save}
         >
-          {this.props.fields.map(
+          {props.fields.map(
             field =>
               !field.hideInput && (
                 <FormGroup key={field.key}>
@@ -115,13 +110,13 @@ class DataForm extends React.Component {
                       type={field.type}
                       id={field.key}
                       name={field.key}
-                      value={this.state[field.key]}
+                      value={state[field.key]}
                       onChange={this.handleInput}
                       autoComplete="off"
                     />
                   ) : (
                     field.formComponent({
-                      entity: this.state.entity,
+                      entity: state.entity,
                       onChange: this.handleComponentInput
                     })
                   )}
@@ -136,5 +131,18 @@ class DataForm extends React.Component {
     );
   }
 }
+
+DataForm.defaultProps = {
+  onSave: null,
+  api: "",
+  entity: null
+};
+
+DataForm.propTypes = {
+  fields: PropTypes.array.isRequired,
+  entity: PropTypes.object,
+  api: PropTypes.string,
+  onSave: PropTypes.func
+};
 
 export default DataForm;

@@ -1,7 +1,8 @@
-//modules
+/* eslint-disable react/prop-types */
+// modules
 import React from "react";
-import constants from "./util/constants";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
+import constants from "./util/constants";
 import * as utils from "./util/utils";
 import "./css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,25 +13,27 @@ import Tasks from "./views/tasks";
 import NoteSrc from "./views/note_src";
 import Settings from "./views/settings";
 import ControlPanel from "./views/control_panel/control_panel";
+import MessageDialog from "./components/message_dialog";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.onLogin = this.onLogin.bind(this);
     this.onLogout = this.onLogout.bind(this);
+
     this.state = {
-      userAdmin: false
+      isMessageDialogOpen: false,
+      messageDialogColor: "",
+      messageDialogMessage: ""
     };
   }
 
   onLogin(username, password) {
+    const { history } = this.props;
     utils.apiReq(
-      "user/search/findByUsernameAndPassword?username=" +
-        username +
-        "&password=" +
-        password,
+      `user/search/findByUsernameAndPassword?username=${username}&password=${password}`,
       data => {
-        let user = data["user"];
+        const { user } = data;
         if (user[0]) {
           console.log("login success");
           localStorage.setItem(constants.LOGGED_USER, JSON.stringify(user[0]));
@@ -40,9 +43,9 @@ class App extends React.Component {
             this.forceUpdate();
           }
           // default route to announcements page
-          this.props.history.push(constants.ROUTES.ANNOUNCEMENTS);
+          history.push(constants.ROUTES.ANNOUNCEMENTS);
         } else {
-          alert("login failed");
+          // alert("login failed");
           localStorage.removeItem(constants.LOGGED_USER);
           return false;
         }
@@ -56,15 +59,14 @@ class App extends React.Component {
   }
 
   render() {
-    let elements = [];
+    const { state } = this;
+    const { props } = this;
+    const elements = [];
     let routes = [];
+
     if (localStorage.getItem(constants.LOGGED_USER)) {
       elements.push(
-        <AppNavBar
-          key={elements.length}
-          user={JSON.parse(localStorage.getItem(constants.LOGGED_USER))}
-          onLogout={this.onLogout}
-        />
+        <AppNavBar key={elements.length} onLogout={this.onLogout} />
       );
       routes = [
         <Route
@@ -107,12 +109,17 @@ class App extends React.Component {
           <Login onLogin={this.onLogin} />
         </Route>
       );
-      if (this.props.location.pathname !== constants.ROUTES.LOGIN) {
-        this.props.history.push(constants.ROUTES.LOGIN);
+      if (props.location.pathname !== constants.ROUTES.LOGIN) {
+        props.history.push(constants.ROUTES.LOGIN);
       }
     }
     return (
       <div id="appContainer">
+        <MessageDialog
+          isOpen={state.isMessageDialogOpen}
+          color={state.messageDialogColor}
+          message={state.messageDialogMessage}
+        />
         {elements}
         <Switch>
           {routes}

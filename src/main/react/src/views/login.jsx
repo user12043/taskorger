@@ -8,6 +8,7 @@ import React from "react";
 import constants from "util/constants";
 import "css/login.css";
 import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 
 class Login extends React.Component {
   constructor(props) {
@@ -22,17 +23,19 @@ class Login extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
-    //redirect to login if not
-    if (this.props.location.pathname !== constants.ROUTES.LOGIN) {
-      this.props.history.push(constants.ROUTES.LOGIN);
+    // redirect to login if not
+    if (props.location.pathname !== constants.ROUTES.LOGIN) {
+      props.history.push(constants.ROUTES.LOGIN);
     }
   }
 
   onSubmit(event) {
     event.preventDefault();
     this.setState({ submitted: true });
-    console.log("login: ", this.state.username + ", " + this.state.password);
-    if (!this.props.onLogin(this.state.username, this.state.password)) {
+    const { username, password } = this.state;
+    const { onLogin } = this.props;
+    console.log("login: ", `${username}, ${password}`);
+    if (!onLogin(username, password)) {
       this.setState({ submitted: false });
     }
   }
@@ -44,44 +47,49 @@ class Login extends React.Component {
   }
 
   validateForm() {
-    return this.state.username.length && this.state.password.length;
+    const { username, password } = this.state;
+    return username.length && password.length;
   }
 
   render() {
+    const { submitted } = this.state;
     return (
       <div className="container loginContainer border border-info">
         <h2>Sign In</h2>
         <form className="form" onSubmit={this.onSubmit}>
           <div className="col">
             <div className="form-group">
-              <label>Username</label>
-              <input
-                className="form-control"
-                onChange={this.onChange}
-                type="text"
-                name="username"
-                id="username"
-                placeholder="username"
-                autoFocus
-              />
+              <label htmlFor="username">
+                Username
+                <input
+                  className="form-control"
+                  onChange={this.onChange}
+                  type="text"
+                  name="username"
+                  id="username"
+                  placeholder="username"
+                />
+              </label>
             </div>
           </div>
           <div className="col">
             <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                className="form-control"
-                onChange={this.onChange}
-                type="password"
-                name="password"
-                id="password"
-                placeholder="********"
-              />
+              <label htmlFor="password">
+                Password
+                <input
+                  className="form-control"
+                  onChange={this.onChange}
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="********"
+                />
+              </label>
             </div>
           </div>
           <button
             className="btn btn-primary"
-            disabled={!this.validateForm() && !this.state.submitted}
+            disabled={!this.validateForm() && !submitted}
             type="submit"
           >
             Submit
@@ -91,5 +99,11 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  onLogin: PropTypes.func.isRequired
+};
 
 export default withRouter(Login);

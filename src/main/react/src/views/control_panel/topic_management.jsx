@@ -18,19 +18,20 @@ class TopicManagement extends React.Component {
     this.fetchTopics = this.fetchTopics.bind(this);
   }
 
-  fetchTopics() {
-    utils.apiReq("topic", data => {
-      this.setState({
-        topics: data["topic"]
-      });
-    });
-  }
-
   componentWillMount() {
     this.fetchTopics();
   }
 
+  fetchTopics() {
+    utils.apiReq("topic", data => {
+      this.setState({
+        topics: data.topic
+      });
+    });
+  }
+
   render() {
+    const { topics } = this.state;
     return (
       <DataControl
         api="topic"
@@ -49,7 +50,7 @@ class TopicManagement extends React.Component {
             defaultValue: "#0"
           }
         ]}
-        data={this.state.topics}
+        data={topics}
         header="Topic Management"
         onSave={this.fetchTopics}
       />
