@@ -1,7 +1,8 @@
 image: openjdk:11
 
 before_script:
-  - apt-get update -qq && apt-get install -y -qq maven
+  - apt-get update -qq && apt-get install -y -qq maven node
+  - npm install
   - npm run build
 
 stages:
