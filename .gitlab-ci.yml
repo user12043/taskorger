@@ -12,9 +12,9 @@ build-backend:
 
 build-frontend:
   before_script:
-    - curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+    - curl -sL https://deb.nodesource.com/setup_11.x | bash -
     - apt-get install -y -qq nodejs
-    - npm install
+    - cd src/main/react && npm install
   stage: build
   script: npm run build
 
