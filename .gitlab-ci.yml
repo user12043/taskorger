@@ -1,17 +1,26 @@
-image: openjdk:11
-
-before_script:
-  - apt-get update -qq && apt-get install -y -qq maven node
-  - npm install
-  - npm run build
+image: maven:3.6.1-jdk-14
 
 stages:
   - build
   - deploy
 
-build:
+build-backend:
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq maven
   stage: build
-  script: mvn clean package
+  script: mvn clean compile
+
+build-frontend:
+  before_script:
+    - curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+    - apt-get install -y -qq nodejs
+    - npm install
+  stage: build
+  script: npm run build
+
+deploy:
+  stage: deploy
+  script: mvn package
   artifacts:
     paths:
       - target/taskorger-1.0-SNAPSHOT.jar
