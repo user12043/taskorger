@@ -12,7 +12,7 @@ class DataForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.validateForm = this.validateForm.bind(this);
+    // this.validateForm = this.validateForm.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleComponentInput = this.handleComponentInput.bind(this);
     this.save = this.save.bind(this);
@@ -116,14 +116,14 @@ class DataForm extends React.Component {
                     />
                   ) : (
                     field.formComponent({
-                      entity: state.entity,
+                      entity: props.entity,
                       onChange: this.handleComponentInput
                     })
                   )}
                 </FormGroup>
               )
           )}
-          <Button color="secondary" disabled={this.validateForm()}>
+          <Button color="secondary" disabled={false}>
             Save
           </Button>
         </Form>
@@ -135,7 +135,7 @@ class DataForm extends React.Component {
 DataForm.defaultProps = {
   onSave: null,
   api: "",
-  entity: null
+  entity: {}
 };
 
 DataForm.propTypes = {

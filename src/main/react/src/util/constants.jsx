@@ -26,7 +26,6 @@ class constants {
   };
 
   static LOGGED_USER = "loggedUser";
-  static USER_ADMIN = "userAdmin";
   static ROLES = {
     USER: 0,
     ADMIN: 1

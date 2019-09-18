@@ -20,23 +20,21 @@ class DataControl extends React.Component {
     this.onSave = this.onSave.bind(this);
     this.state = {
       formOpen: false,
-      editingEntity: null
+      editingEntity: {}
     };
+    this.initialState = this.state;
   }
 
   toggleForm() {
     this.setState(state => ({
       formOpen: !state.formOpen,
-      editingEntity: null
+      editingEntity: {}
     }));
   }
 
   onSave() {
     const { onSave } = this.props;
-    this.setState({
-      formOpen: false,
-      editingEntity: null
-    });
+    this.setState(this.initialState);
     onSave();
   }
 

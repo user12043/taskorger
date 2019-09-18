@@ -59,32 +59,26 @@ class Login extends React.Component {
         <form className="form" onSubmit={this.onSubmit}>
           <div className="col">
             <div className="form-group">
-              <label htmlFor="username">
-                Username
-                <input
-                  className="form-control"
-                  onChange={this.onChange}
-                  type="text"
-                  name="username"
-                  id="username"
-                  placeholder="username"
-                />
-              </label>
+              <input
+                className="form-control"
+                onChange={this.onChange}
+                type="text"
+                name="username"
+                id="username"
+                placeholder="username"
+              />
             </div>
           </div>
           <div className="col">
             <div className="form-group">
-              <label htmlFor="password">
-                Password
-                <input
-                  className="form-control"
-                  onChange={this.onChange}
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="********"
-                />
-              </label>
+              <input
+                className="form-control"
+                onChange={this.onChange}
+                type="password"
+                name="password"
+                id="password"
+                placeholder="********"
+              />
             </div>
           </div>
           <button

@@ -5,16 +5,19 @@
  */
 
 import React from "react";
-import { Alert, Card, CardBody, Collapse } from "reactstrap";
+// eslint-disable-next-line no-unused-vars
+import { Alert, Collapse } from "reactstrap";
 import PropTypes from "prop-types";
 
+const style = {
+  width: "30vw",
+  zIndex: 9999,
+  left: "unset"
+};
+
 const MessageDialog = ({ isOpen, color, message }) => (
-  <Collapse isOpen={isOpen}>
-    <Card>
-      <CardBody>
-        <Alert color={color}>{message}</Alert>
-      </CardBody>
-    </Card>
+  <Collapse isOpen={isOpen} style={style} className="fixed-bottom">
+    <Alert color={color}>{message}</Alert>
   </Collapse>
 );
 

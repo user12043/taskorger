@@ -76,11 +76,11 @@ class TaskManagement extends React.Component {
           {
             name: "Topic",
             key: "topic",
-            formComponent: ({ entity, onChange }) => (
+            formComponent: ({ entity, onChange } = {}) => (
               <select
                 id="topic"
                 name="topic"
-                value={entity.topic.id}
+                value={(entity && entity.topic && entity.topic.id) || ""}
                 onChange={value => onChange(value)}
               >
                 {topics.map(({ id, name }) => (
@@ -108,7 +108,11 @@ class TaskManagement extends React.Component {
             key: "column",
             defaultValue: {},
             formComponent: ({ entity }) => (
-              <select id="column" name="column" value={entity.column.id}>
+              <select
+                id="column"
+                name="column"
+                value={(entity && entity.column && entity.column.id) || ""}
+              >
                 {columns.map(({ id, name }) => (
                   <option value={id}>{name}</option>
                 ))}
