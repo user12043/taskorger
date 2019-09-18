@@ -12,12 +12,11 @@ build-backend:
 
 build-frontend:
   before_script:
-    - cd src/main/react
-    - curl https://nodejs.org/dist/v12.10.0/node-v12.10.0-linux-x64.tar.gz --output node.tar.gz
-    - tar -xf node.tar.gz
-    - ./node-v12.10.0-linux-x64/bin/npm ci
+    - curl -sL https://deb.nodesource.com/setup_11.x | bash -
+    - apt-get install -y -qq nodejs
+    - cd src/main/react && npm ci
   stage: build
-  script: ./node-v12.10.0-linux-x64/bin/npm run build
+  script: npm run build
 
 deploy:
   stage: deploy
