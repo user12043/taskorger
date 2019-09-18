@@ -36,12 +36,11 @@ class App extends React.Component {
         const { user } = data;
         if (user[0]) {
           console.log("login success");
-          localStorage.setItem(constants.LOGGED_USER, JSON.stringify(user[0]));
-          if (user[0].role === constants.ROLES.ADMIN) {
-            localStorage.setItem(constants.USER_ADMIN, constants.ROLES.ADMIN);
-          } else {
-            this.forceUpdate();
-          }
+          const { id, username, name, role } = user[0];
+          localStorage.setItem(
+            constants.LOGGED_USER,
+            JSON.stringify({ id, username, name, role })
+          );
           // default route to announcements page
           history.push(constants.ROUTES.ANNOUNCEMENTS);
         } else {
@@ -66,7 +65,11 @@ class App extends React.Component {
 
     if (localStorage.getItem(constants.LOGGED_USER)) {
       elements.push(
-        <AppNavBar key={elements.length} onLogout={this.onLogout} />
+        <AppNavBar
+          key={elements.length}
+          onLogout={this.onLogout}
+          user={JSON.parse(localStorage.getItem(constants.LOGGED_USER))}
+        />
       );
       routes = [
         <Route
@@ -91,7 +94,8 @@ class App extends React.Component {
       ];
 
       if (
-        +localStorage.getItem(constants.USER_ADMIN) === constants.ROLES.ADMIN
+        +JSON.parse(localStorage.getItem(constants.LOGGED_USER)).role ===
+        constants.ROLES.ADMIN
       ) {
         routes.push(
           <Route
@@ -115,11 +119,6 @@ class App extends React.Component {
     }
     return (
       <div id="appContainer">
-        <MessageDialog
-          isOpen={state.isMessageDialogOpen}
-          color={state.messageDialogColor}
-          message={state.messageDialogMessage}
-        />
         {elements}
         <Switch>
           {routes}
@@ -127,6 +126,11 @@ class App extends React.Component {
             <Redirect to={constants.ROUTES.ANNOUNCEMENTS} />
           </Route>
         </Switch>
+        <MessageDialog
+          isOpen={state.isMessageDialogOpen}
+          color={state.messageDialogColor}
+          message={state.messageDialogMessage}
+        />
       </div>
     );
   }
