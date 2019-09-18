@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import * as utils from "util/utils";
 import PropTypes from "prop-types";
-import { Badge, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from "reactstrap";
+import {
+  Badge,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  UncontrolledDropdown
+} from "reactstrap";
 
 function SelectedBadge({ entity, onDelete }) {
   return (

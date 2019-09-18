@@ -5,7 +5,15 @@
  */
 import React from "react";
 import PropTypes from "prop-types";
-import { Alert, Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
+import {
+  Alert,
+  Button,
+  Container,
+  Form,
+  FormGroup,
+  Input,
+  Label
+} from "reactstrap";
 import * as utils from "util/utils";
 
 class DataForm extends React.Component {
