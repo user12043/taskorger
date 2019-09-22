@@ -11,6 +11,27 @@ import constants from "util/constants";
 import "css/control-panel.css";
 import SidebarItem from "./control_panel.sidebar_item";
 
+const links = [
+  {
+    to: constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN,
+    header: "Announcement Management"
+  },
+  {
+    to: constants.ROUTES.CONTROL_PANEL_SUB.COLUMN_MAN,
+    header: "Column Management"
+  },
+  { to: constants.ROUTES.CONTROL_PANEL_SUB.TAG_MAN, header: "Tag Management" },
+  {
+    to: constants.ROUTES.CONTROL_PANEL_SUB.TASK_MAN,
+    header: "Task Management"
+  },
+  {
+    to: constants.ROUTES.CONTROL_PANEL_SUB.TOPIC_MAN,
+    header: "Topic Management"
+  },
+  { to: constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN, header: "User Management" }
+];
+
 class ControlPanelSidebar extends React.Component {
   constructor(props) {
     super(props);
@@ -46,54 +67,13 @@ class ControlPanelSidebar extends React.Component {
         </NavbarToggler>
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" vertical navbar>
-            <SidebarItem>
-              <NavLink
-                to={constants.ROUTES.CONTROL_PANEL_SUB.ANNOUNCEMENT_MAN}
-                className="nav-link"
-              >
-                Announcement Management
-              </NavLink>
-            </SidebarItem>
-            <SidebarItem>
-              <NavLink
-                to={constants.ROUTES.CONTROL_PANEL_SUB.COLUMN_MAN}
-                className="nav-link"
-              >
-                Column Management
-              </NavLink>
-            </SidebarItem>
-            <SidebarItem>
-              <NavLink
-                to={constants.ROUTES.CONTROL_PANEL_SUB.TAG_MAN}
-                className="nav-link"
-              >
-                Tag Management
-              </NavLink>
-            </SidebarItem>
-            <SidebarItem>
-              <NavLink
-                to={constants.ROUTES.CONTROL_PANEL_SUB.TASK_MAN}
-                className="nav-link"
-              >
-                Task Management
-              </NavLink>
-            </SidebarItem>
-            <SidebarItem>
-              <NavLink
-                to={constants.ROUTES.CONTROL_PANEL_SUB.TOPIC_MAN}
-                className="nav-link"
-              >
-                Topic Management
-              </NavLink>
-            </SidebarItem>
-            <SidebarItem>
-              <NavLink
-                to={constants.ROUTES.CONTROL_PANEL_SUB.USER_MAN}
-                className="nav-link"
-              >
-                User Management
-              </NavLink>
-            </SidebarItem>
+            {links.map(({ to, header }) => (
+              <SidebarItem>
+                <NavLink to={to} className="nav-link">
+                  {header}
+                </NavLink>
+              </SidebarItem>
+            ))}
           </Nav>
         </Collapse>
       </Navbar>
