@@ -125,7 +125,9 @@ class DataForm extends React.Component {
                   ) : (
                     field.formComponent({
                       entity: props.entity,
-                      onChange: this.handleComponentInput
+                      onChange: value => {
+                        this.handleComponentInput(field.key, value);
+                      }
                     })
                   )}
                 </FormGroup>

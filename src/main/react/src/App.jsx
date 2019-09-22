@@ -15,6 +15,21 @@ import Settings from "./views/settings";
 import ControlPanel from "./views/control_panel/control_panel";
 import MessageDialog from "./components/message_dialog";
 
+const appRoutes = [
+  { path: constants.ROUTES.ANNOUNCEMENTS, component: Announcements },
+  { path: constants.ROUTES.TASKS, component: Tasks },
+  { path: constants.ROUTES.NOTE_SRC, component: NoteSrc },
+  { path: constants.ROUTES.SETTINGS, component: Settings }
+];
+
+if (utils.isAdmin()) {
+  appRoutes.push({
+    path: constants.ROUTES.CONTROL_PANEL,
+    component: ControlPanel,
+    notExact: true
+  });
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -44,7 +59,7 @@ class App extends React.Component {
           // default route to announcements page
           history.push(constants.ROUTES.ANNOUNCEMENTS);
         } else {
-          // alert("login failed");
+          // TODO login failed global alert
           localStorage.removeItem(constants.LOGGED_USER);
           return false;
         }
@@ -59,7 +74,6 @@ class App extends React.Component {
 
   render() {
     const { state } = this;
-    const { props } = this;
     const elements = [];
     let routes = [];
 
@@ -71,61 +85,29 @@ class App extends React.Component {
           user={JSON.parse(localStorage.getItem(constants.LOGGED_USER))}
         />
       );
-      routes = [
-        <Route
-          exact
-          key="0"
-          path={constants.ROUTES.ANNOUNCEMENTS}
-          component={Announcements}
-        />,
-        <Route exact key="1" path={constants.ROUTES.TASKS} component={Tasks} />,
-        <Route
-          exact
-          key="2"
-          path={constants.ROUTES.NOTE_SRC}
-          component={NoteSrc}
-        />,
-        <Route
-          exact
-          key="3"
-          path={constants.ROUTES.SETTINGS}
-          component={Settings}
-        />
-      ];
 
-      if (
-        +JSON.parse(localStorage.getItem(constants.LOGGED_USER)).role ===
-        constants.ROLES.ADMIN
-      ) {
-        routes.push(
-          <Route
-            key={routes.length}
-            path={constants.ROUTES.CONTROL_PANEL}
-            component={ControlPanel}
-          />
-        );
-      }
-    } else {
-      // not logged in
-      // add login route and redirect
-      routes = (
-        <Route key={routes.length} path={constants.ROUTES.LOGIN}>
-          <Login onLogin={this.onLogin} />
-        </Route>
-      );
-      if (props.location.pathname !== constants.ROUTES.LOGIN) {
-        props.history.push(constants.ROUTES.LOGIN);
-      }
+      routes = appRoutes.map(({ path, component, notExact }) => (
+        <Route exact={!notExact} key={path} path={path} component={component} />
+      ));
     }
     return (
       <div id="appContainer">
-        {elements}
-        <Switch>
-          {routes}
-          <Route>
-            <Redirect to={constants.ROUTES.ANNOUNCEMENTS} />
+        {localStorage.getItem(constants.LOGGED_USER) ? (
+          <>
+            {elements}
+            <Switch>
+              {routes}
+              <Route>
+                <Redirect to={constants.ROUTES.ANNOUNCEMENTS} />
+              </Route>
+            </Switch>
+          </>
+        ) : (
+          <Route key={routes.length} path={constants.ROUTES.LOGIN}>
+            <Login onLogin={this.onLogin} />
           </Route>
-        </Switch>
+        )}
+
         <MessageDialog
           isOpen={state.isMessageDialogOpen}
           color={state.messageDialogColor}

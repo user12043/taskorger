@@ -44,20 +44,15 @@ class DataControl extends React.Component {
 
   deleteEntity(entity) {
     const { onSave } = this.props;
-    utils.apiReq(
-      utils.getSelfLink(entity),
-      () => onSave(),
-      {
-        method: "delete"
-      }
-      // , response => alert(response.message)
-    );
+    utils.apiReq(utils.getSelfLink(entity), () => onSave(), {
+      method: "delete"
+    });
   }
 
-  render() {
-    const { state, props } = this;
+  dataform = () => {
+    const { props, state } = this;
     return (
-      <Container className="border border-info bg-dark text-light pt-2 ml-5 ml-md-0">
+      <>
         <h3>{props.header}</h3>
         <Button
           className="add-button"
@@ -75,12 +70,38 @@ class DataControl extends React.Component {
             api={props.api}
           />
         </Collapse>
+      </>
+    );
+  };
+
+  actions = entity => (
+    <td>
+      <ButtonGroup>
+        <Button color="primary" onClick={() => this.editEntity(entity)} outline>
+          Edit
+        </Button>
+        <Button
+          color="danger"
+          onClick={() => this.deleteEntity(entity)}
+          outline
+        >
+          Delete
+        </Button>
+      </ButtonGroup>
+    </td>
+  );
+
+  render() {
+    const { data, fields } = this.props;
+    return (
+      <Container className="border border-info bg-dark text-light pt-2 ml-5 ml-md-0">
+        {this.dataform()}
         <hr />
-        {props.data && props.data.length ? (
+        {data && data.length ? (
           <Table className="text-light table-bordered table-responsive-sm">
             <thead>
               <tr>
-                {props.fields.map(field =>
+                {fields.map(field =>
                   !field.hideColumn ? (
                     <th key={field.key}>{field.name}</th>
                   ) : null
@@ -89,9 +110,9 @@ class DataControl extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {props.data.map((entity, index) => (
+              {data.map((entity, index) => (
                 <tr key={entity.id || index}>
-                  {props.fields.map(
+                  {fields.map(
                     field =>
                       !field.hideColumn &&
                       (!field.tableComponent ? (
@@ -105,24 +126,7 @@ class DataControl extends React.Component {
                         </td>
                       ))
                   )}
-                  <td>
-                    <ButtonGroup>
-                      <Button
-                        color="primary"
-                        onClick={() => this.editEntity(entity)}
-                        outline
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        color="danger"
-                        onClick={() => this.deleteEntity(entity)}
-                        outline
-                      >
-                        Delete
-                      </Button>
-                    </ButtonGroup>
-                  </td>
+                  {this.actions(entity)}
                 </tr>
               ))}
             </tbody>

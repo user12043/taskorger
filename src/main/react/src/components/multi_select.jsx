@@ -9,10 +9,10 @@ import {
   UncontrolledDropdown
 } from "reactstrap";
 
-function SelectedBadge({ entity, onDelete }) {
+function SelectedBadge({ entity, onDelete, displayKey }) {
   return (
     <Badge className="m-1 d-flex" color="secondary" pill>
-      <div className="m-1">{entity.displayKey}</div>
+      <div className="m-1">{entity[displayKey]}</div>
       <Badge
         tag="button"
         className="btn-danger"

@@ -38,7 +38,7 @@ export function apiReq(path, callback, options, error, notEmbedded) {
       if (error) {
         error(response);
       } else {
-        // alert("fetching failed!: " + response.message);
+        // TODO show global alert
       }
     });
 }
@@ -51,4 +51,13 @@ export function getSelfLink(entityObject) {
 export function getIdFromSelfLink(entityObject) {
   const selfLink = getSelfLink(entityObject);
   return +selfLink.substr(selfLink.lastIndexOf("/") + 1);
+}
+
+export function isAdmin() {
+  // eslint-disable-next-line no-debugger
+  return (
+    localStorage.getItem(constants.LOGGED_USER) &&
+    +JSON.parse(localStorage.getItem(constants.LOGGED_USER)).role ===
+      constants.ROLES.ADMIN
+  );
 }
