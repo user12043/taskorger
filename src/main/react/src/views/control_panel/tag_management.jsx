@@ -6,55 +6,31 @@
 
 import React from "react";
 import DataControl from "components/control_panel.data_control";
-import * as utils from "util/utils";
 
-export default class TagManagement extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tags: []
-    };
+const TagManagement = () => {
+  return (
+    <DataControl
+      api="tag"
+      apiAccess="tags"
+      fields={[
+        { name: "Name", key: "name", type: "text" },
+        { name: "Color", key: "color", type: "color", defaultValue: "#0" },
+        {
+          name: "Create date",
+          key: "createDate",
+          type: "date",
+          hideInput: true
+        },
+        {
+          name: "Update date",
+          key: "updateDate",
+          type: "date",
+          hideInput: true
+        }
+      ]}
+      header="Tag Management"
+    />
+  );
+};
 
-    this.fetchTags = this.fetchTags.bind(this);
-  }
-
-  componentWillMount() {
-    this.fetchTags();
-  }
-
-  fetchTags() {
-    utils.apiReq("tag", data => {
-      this.setState({
-        tags: data.tag
-      });
-    });
-  }
-
-  render() {
-    const { tags } = this.state;
-    return (
-      <DataControl
-        api="tag"
-        fields={[
-          { name: "Name", key: "name", type: "text" },
-          { name: "Color", key: "color", type: "color", defaultValue: "#0" },
-          {
-            name: "Create date",
-            key: "createDate",
-            type: "date",
-            hideInput: true
-          },
-          {
-            name: "Update date",
-            key: "updateDate",
-            type: "date",
-            hideInput: true
-          }
-        ]}
-        data={tags}
-        header="Tag Management"
-        onSave={this.fetchTags}
-      />
-    );
-  }
-}
+export default TagManagement;

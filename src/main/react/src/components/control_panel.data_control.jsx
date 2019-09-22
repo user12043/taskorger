@@ -6,7 +6,7 @@
 
 import React from "react";
 import { Button, ButtonGroup, Collapse, Container, Table } from "reactstrap";
-import * as utils from "util/utils";
+import { apiReq, getSelfLink } from "util/utils";
 import PropTypes from "prop-types";
 import DataForm from "./control_panel.data_form";
 
@@ -20,9 +20,13 @@ class DataControl extends React.Component {
     this.onSave = this.onSave.bind(this);
     this.state = {
       formOpen: false,
-      editingEntity: {}
+      editingEntity: {},
+      data: []
     };
-    this.initialState = this.state;
+  }
+
+  componentDidMount() {
+    this.fetchData();
   }
 
   toggleForm() {
@@ -32,10 +36,21 @@ class DataControl extends React.Component {
     }));
   }
 
+  fetchData() {
+    const { api, apiAccess } = this.props;
+    apiReq(api, response => {
+      this.setState({
+        data: response[apiAccess || api]
+      });
+    });
+  }
+
   onSave() {
-    const { onSave } = this.props;
-    this.setState(this.initialState);
-    onSave();
+    this.setState({
+      formOpen: false,
+      editingEntity: {}
+    });
+    this.fetchData();
   }
 
   editEntity(entity) {
@@ -44,7 +59,7 @@ class DataControl extends React.Component {
 
   deleteEntity(entity) {
     const { onSave } = this.props;
-    utils.apiReq(utils.getSelfLink(entity), () => onSave(), {
+    apiReq(getSelfLink(entity), () => onSave(), {
       method: "delete"
     });
   }
@@ -92,7 +107,8 @@ class DataControl extends React.Component {
   );
 
   render() {
-    const { data, fields } = this.props;
+    const { fields } = this.props;
+    const { data } = this.state;
     return (
       <Container className="border border-info bg-dark text-light pt-2 ml-5 ml-md-0">
         {this.dataform()}
@@ -144,13 +160,13 @@ DataControl.propTypes = {
   onSave: PropTypes.func,
   fields: PropTypes.array.isRequired,
   api: PropTypes.string.isRequired,
-  data: PropTypes.array
+  apiAccess: PropTypes.string
 };
 
 DataControl.defaultProps = {
-  data: [],
   header: null,
-  onSave: () => null
+  onSave: () => null,
+  apiAccess: null
 };
 
 export default DataControl;

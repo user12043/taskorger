@@ -10,7 +10,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  *
  * @author user12043
  */
-@RepositoryRestResource(collectionResourceRel = "topic", path = "topic")
+@RepositoryRestResource(collectionResourceRel = "topics", path = "topic")
 public interface TopicDao extends JpaRepository<Topic, Long> {
 
 }

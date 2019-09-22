@@ -10,7 +10,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  *
  * @author user12043
  */
-@RepositoryRestResource(collectionResourceRel = "task", path = "task")
+@RepositoryRestResource(collectionResourceRel = "tasks", path = "task")
 public interface TaskDao extends JpaRepository<Task, Long> {
 
 }

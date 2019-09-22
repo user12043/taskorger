@@ -52,10 +52,10 @@ class MultiSelect extends Component {
   }
 
   fetchData() {
-    const { props } = this;
-    utils.apiReq(props.api, data => {
+    const { api, apiAccess } = this.props;
+    utils.apiReq(api, data => {
       this.setState({
-        data: data[props.apiAccess || props.api],
+        data: data[apiAccess || api],
         selectedData: []
       });
     });

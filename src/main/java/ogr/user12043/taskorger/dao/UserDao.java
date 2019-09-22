@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author user12043
  */
-@RepositoryRestResource(collectionResourceRel = "user", path = "user")
+@RepositoryRestResource(collectionResourceRel = "users", path = "user")
 public interface UserDao extends JpaRepository<User, Long> {
     List<User> findUserByName(@Param("name") String name);
 

@@ -10,7 +10,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  *
  * @author user12043
  */
-@RepositoryRestResource(collectionResourceRel = "announcement", path = "announcement")
+@RepositoryRestResource(collectionResourceRel = "announcements", path = "announcement")
 public interface AnnouncementDao extends JpaRepository<Announcement, Long> {
 
 }

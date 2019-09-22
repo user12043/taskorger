@@ -10,7 +10,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  *
  * @author user12043
  */
-@RepositoryRestResource(collectionResourceRel = "column", path = "column")
+@RepositoryRestResource(collectionResourceRel = "columns", path = "column")
 public interface ColumnDao extends JpaRepository<Column, Long> {
 
 }

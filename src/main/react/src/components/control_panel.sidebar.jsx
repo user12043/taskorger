@@ -68,7 +68,7 @@ class ControlPanelSidebar extends React.Component {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" vertical navbar>
             {links.map(({ to, header }) => (
-              <SidebarItem>
+              <SidebarItem key={to}>
                 <NavLink to={to} className="nav-link">
                   {header}
                 </NavLink>

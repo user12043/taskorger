@@ -3,68 +3,43 @@
  * part of taskorger
  * @author user12043
  */
+/* eslint-disable react/prop-types */
 
 import React from "react";
-import * as utils from "util/utils";
 import DataControl from "components/control_panel.data_control";
 
-class UserManagement extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      users: []
-    };
-
-    this.fetchUsers = this.fetchUsers.bind(this);
-  }
-
-  componentWillMount() {
-    this.fetchUsers();
-  }
-
-  fetchUsers() {
-    utils.apiReq("user", data => {
-      this.setState({
-        users: data.user
-      });
-    });
-  }
-
-  render() {
-    const { users } = this.state;
-    return (
-      <DataControl
-        api="user"
-        fields={[
-          { name: "Name", key: "name", type: "text" },
-          { name: "Username", key: "username", type: "text" },
-          {
-            name: "Password",
-            key: "password",
-            type: "text",
-            hideColumn: true
-          },
-          { name: "Role", key: "role", type: "number", defaultValue: "0" },
-          {
-            name: "Create date",
-            key: "createDate",
-            type: "date",
-            hideInput: true,
-            tableComponent: ({ value }) => <div key={value}>{value}</div>
-          },
-          {
-            name: "Update date",
-            key: "updateDate",
-            type: "date",
-            hideInput: true
-          }
-        ]}
-        data={users}
-        header="User Management"
-        onSave={this.fetchUsers}
-      />
-    );
-  }
-}
+const UserManagement = () => {
+  return (
+    <DataControl
+      api="user"
+      apiAccess="users"
+      fields={[
+        { name: "Name", key: "name", type: "text" },
+        { name: "Username", key: "username", type: "text" },
+        {
+          name: "Password",
+          key: "password",
+          type: "text",
+          hideColumn: true
+        },
+        { name: "Role", key: "role", type: "number", defaultValue: "0" },
+        {
+          name: "Create date",
+          key: "createDate",
+          type: "date",
+          hideInput: true,
+          tableComponent: ({ value }) => <div key={value}>{value}</div>
+        },
+        {
+          name: "Update date",
+          key: "updateDate",
+          type: "date",
+          hideInput: true
+        }
+      ]}
+      header="User Management"
+    />
+  );
+};
 
 export default UserManagement;

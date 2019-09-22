@@ -10,7 +10,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  *
  * @author user12043
  */
-@RepositoryRestResource(collectionResourceRel = "tag", path = "tag")
+@RepositoryRestResource(collectionResourceRel = "tags", path = "tag")
 public interface TagDao extends JpaRepository<Tag, Long> {
 
 }
