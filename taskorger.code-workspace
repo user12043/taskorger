@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "src/main/react",
+			"name": "ui-root"
+		},
+		{
+			"path": "src/main/react/src",
+			"name": "ui-source-files"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/node_modules": true
+		},
+		"[javascriptreact]": {
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"esbenp.prettier-vscode"
+		]
+	}
+}
