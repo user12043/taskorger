@@ -15,20 +15,22 @@ import Settings from "./views/settings";
 import ControlPanel from "./views/control_panel/control_panel";
 import MessageDialog from "./components/message_dialog";
 
-const appRoutes = [
-  { path: constants.ROUTES.ANNOUNCEMENTS, component: Announcements },
-  { path: constants.ROUTES.TASKS, component: Tasks },
-  { path: constants.ROUTES.NOTE_SRC, component: NoteSrc },
-  { path: constants.ROUTES.SETTINGS, component: Settings }
-];
-
-if (utils.isAdmin()) {
-  appRoutes.push({
-    path: constants.ROUTES.CONTROL_PANEL,
-    component: ControlPanel,
-    notExact: true
-  });
-}
+const appRoutes = () => {
+  const routes = [
+    { path: constants.ROUTES.ANNOUNCEMENTS, component: Announcements },
+    { path: constants.ROUTES.TASKS, component: Tasks },
+    { path: constants.ROUTES.NOTE_SRC, component: NoteSrc },
+    { path: constants.ROUTES.SETTINGS, component: Settings }
+  ];
+  if (utils.isAdmin()) {
+    routes.push({
+      path: constants.ROUTES.CONTROL_PANEL,
+      component: ControlPanel,
+      notExact: true
+    });
+    return routes;
+  }
+};
 
 class App extends React.Component {
   constructor(props) {
@@ -48,10 +50,10 @@ class App extends React.Component {
     utils.apiReq(
       `user/search/findByUsernameAndPassword?username=${username}&password=${password}`,
       data => {
-        const { user } = data;
-        if (user[0]) {
+        const { users } = data;
+        if (users[0]) {
           console.log("login success");
-          const { id, username, name, role } = user[0];
+          const { id, username, name, role } = users[0];
           localStorage.setItem(
             constants.LOGGED_USER,
             JSON.stringify({ id, username, name, role })
@@ -86,7 +88,7 @@ class App extends React.Component {
         />
       );
 
-      routes = appRoutes.map(({ path, component, notExact }) => (
+      routes = appRoutes().map(({ path, component, notExact }) => (
         <Route exact={!notExact} key={path} path={path} component={component} />
       ));
     }
