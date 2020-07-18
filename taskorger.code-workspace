@@ -5,8 +5,8 @@
 			"name": "ui-root"
 		},
 		{
-			"path": "src/main/react/src",
-			"name": "ui-source-files"
+			"path": ".",
+			"name": "project-root"
 		}
 	],
 	"settings": {
@@ -15,7 +15,16 @@
 		},
 		"[javascriptreact]": {
 			"editor.defaultFormatter": "esbenp.prettier-vscode"
-		}
+		},
+		"workbench.colorCustomizations": {
+			"window.activeBorder": "#0000ff",
+			"activityBar.background": "#17340B",
+			"titleBar.activeBackground": "#20490F",
+			"titleBar.activeForeground": "#F5FCF2"
+		},
+		"cSpell.words": [
+			"taskorger"
+		]
 	},
 	"extensions": {
 		"recommendations": [

@@ -4,13 +4,13 @@
   "description": "Taskorger frontend",
   "private": true,
   "dependencies": {
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^4.5.0",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1",
-    "reactstrap": "^8.0.0"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.1",
+    "reactstrap": "^8.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,21 +33,21 @@
   "proxy": "http://localhost:8081",
   "homepage": "http://host/taskorger",
   "devDependencies": {
-    "eslint": "^6.3.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-config-react": "^1.1.7",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-app": "^6.0.1",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-app": "^6.2.2",
     "eslint-plugin-react-hooks": "^1.7.0",
     "eslint-plugin-standard": "^4.0.1",
-    "prettier": "^1.18.2",
-    "typescript": "^3.6.2"
+    "prettier": "^1.19.1",
+    "typescript": "^3.9.7"
   }
 }

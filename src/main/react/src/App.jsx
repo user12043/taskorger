@@ -76,6 +76,7 @@ class App extends React.Component {
 
   render() {
     const { state } = this;
+    const { location } = this.props;
     const elements = [];
     let routes = [];
 
@@ -92,23 +93,34 @@ class App extends React.Component {
         <Route exact={!notExact} key={path} path={path} component={component} />
       ));
     }
+    console.log(`location:${JSON.stringify(location)}`);
+
+    let content;
+    if (localStorage.getItem(constants.LOGGED_USER)) {
+      content = (
+        <>
+          {elements}
+          <Switch>
+            {routes}
+            <Route>
+              <Redirect to={constants.ROUTES.ANNOUNCEMENTS} />
+            </Route>
+          </Switch>
+        </>
+      );
+    } else if (location.pathname === constants.ROUTES.LOGIN) {
+      content = (
+        <Route key={routes.length} path={constants.ROUTES.LOGIN}>
+          <Login onLogin={this.onLogin} />
+        </Route>
+      );
+    } else {
+      content = <Redirect to={constants.ROUTES.LOGIN} />;
+    }
+
     return (
       <div id="appContainer">
-        {localStorage.getItem(constants.LOGGED_USER) ? (
-          <>
-            {elements}
-            <Switch>
-              {routes}
-              <Route>
-                <Redirect to={constants.ROUTES.ANNOUNCEMENTS} />
-              </Route>
-            </Switch>
-          </>
-        ) : (
-          <Route key={routes.length} path={constants.ROUTES.LOGIN}>
-            <Login onLogin={this.onLogin} />
-          </Route>
-        )}
+        {content}
 
         <MessageDialog
           isOpen={state.isMessageDialogOpen}

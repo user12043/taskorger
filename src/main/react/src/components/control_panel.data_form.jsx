@@ -38,7 +38,8 @@ class DataForm extends React.Component {
     this.initialState = this.state;
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
     let newState = {};
     if (!nextProps.entity) {
       newState = this.initialState;
