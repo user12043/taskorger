@@ -22,7 +22,6 @@ public class RestConfig implements RepositoryRestConfigurer {
         this.entityManager = entityManager;
     }
 
-    @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         // expose ids for all entities
         entityManager.getMetamodel().getEntities().forEach((entityType -> config.exposeIdsFor(entityType.getJavaType())));
