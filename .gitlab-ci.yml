@@ -13,10 +13,10 @@ build-backend:
 build-frontend:
   before_script:
     - curl -sL https://deb.nodesource.com/setup_10.x | bash -
-    - apt-get install -y -qq nodejs
-    - cd src/main/react && npm ci
+    - apt-get install -y -qq nodejs yarn
+    - cd src/main/react && yarn
   stage: build
-  script: npm run build
+  script: yarn build
 
 deploy:
   before_script:
