@@ -14,7 +14,7 @@ build-frontend:
   before_script:
     - curl -sL https://deb.nodesource.com/setup_10.x | bash -
     - apt-get install -y -qq nodejs yarn
-    - cd src/main/react && yarn
+    - cd src/main/react && yarn install
   stage: build
   script: yarn build
 
